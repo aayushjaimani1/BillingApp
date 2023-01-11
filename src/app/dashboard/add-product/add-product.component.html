@@ -6,58 +6,108 @@
           <div class="title mb-30">
             <h2>Add Product</h2>
           </div>
-
-  <!-- end container -->
-</section>
-<ng-template #content let-modal>
-  <div class="modal-content card-style2">
-    <div class="modal-header px-0 border-0">
-      <h4 class="text-bold">Add Product</h4>
-      <button class="border-0 bg-transparent h1" style="outline: none;" (click)="modal.dismiss('Cross click')">
-        <i class="lni lni-cross-circle"></i>
-      </button>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+          <div class="pe-4">
+            <a class="main-btn primary-btn btn-hover" (click)="stockModal(stockform)">Add Stock</a>
+          </div>
+          <div>
+            <a class="main-btn primary-btn btn-hover" (click)="openModal(content)">Add Product</a>
+          </div>
+        </div>
+      </div>
+      <!-- end row -->
     </div>
-    <div class="modal-body px-0">
-      <div class="content">
-        <form action="" [formGroup]="product" (submit)="AddProduct(modal)">
-          <div class="row pb-5">
-            <div class="mb-3 col-12">
-              <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Product Name</label>
-              <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2"
-                placeholder="123 VEGETABLE OIL 500ML" formControlName="name" />
-            </div>
-            <div class="mb-3 col-6">
-              <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">SKU</label>
-              <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="12005000602"
-                formControlName="sku" />
-            </div>
-            <div class="mb-3 col-6">
-              <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Category</label>
-              <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="Household"
-                formControlName="category" />
-            </div>
-            <div class="mb-3 col-6">
-              <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Stock</label>
-              <input type="number" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="77930"
-                formControlName="stock" />
-            </div>
-            <div class="mb-3 col-6">
-              <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Price</label>
-              <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="1.20"
-                formControlName="price" />
-            </div>
-            <div class="mb-3 col-12">
-              <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Image</label>
-              <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2"
-                placeholder="http://cloudinary.com/oil.png" formControlName="image" />
-            </div>
+    <div class="col-lg-12">
+      <div class="card-style mb-30">
+        <div class="title d-flex flex-wrap align-items-center justify-content-between">
+          <div class="left">
+            <h6 class="text-medium mb-30">Products</h6>
           </div>
-          <div class="action d-flex flex-wrap justify-content-end">
-            <button class="main-btn primary-btn btn-hover m-1 mb-5">
-              Add Product
-            </button>
-          </div>
-        </form>
+        </div>
+        <!-- End Title -->
+        <div class="table-responsive">
+          <table class="table top-selling-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>
+                  <h6 class="text-sm text-medium">Name</h6>
+                </th>
+                <th class="min-width">
+                  <h6 class="text-sm text-medium">
+                    SKU <i class="lni lni-arrows-vertical"></i>
+                  </h6>
+                </th>
+                <th class="min-width">
+                  <h6 class="text-sm text-medium">
+                    Stock <i class="lni lni-arrows-vertical"></i>
+                  </h6>
+                </th>
+                <th class="min-width">
+                  <h6 class="text-sm text-medium">
+                    Price <i class="lni lni-arrows-vertical"></i>
+                  </h6>
+                </th>
+                <th>
+                  <h6 class="text-sm text-medium">
+                    Categories <i class="lni lni-arrows-vertical"></i>
+                  </h6>
+                </th>
+                <th>
+                  <h6 class="text-sm text-medium">
+                    Actions <i class="lni lni-arrows-vertical"></i>
+                  </h6>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of products">
+                <td>
+                  <div class="check-input-primary">
+                    <input class="form-check-input" type="checkbox" id="checkbox-1">
+                  </div>
+                </td>
+                <td>
+                  <div class="product">
+                    <div class="image">
+                      <img src="{{product.image}}" alt="" />
+                    </div>
+                    <p class="text-sm" style="width:220px">{{product.pname}}</p>
+                  </div>
+                </td>
+                <td>
+                  <p class="text-sm" #singleproduct>{{product.sku}}</p>
+                </td>
+                <td>
+                  <p class="text-sm">{{product.stock}}</p>
+                </td>
+                <td>
+                  <p class="text-sm">{{product.price}}</p>
+                </td>
+                <td>
+                  <p class="text-sm">{{product.category}}</p>
+                </td>
+                <td>
+                  <div class="action">
+                    <button class="edit">
+                      <i class="lni lni-pencil"></i>
+                    </button>
+                    <button class="delete" (click)="delete(singleproduct.innerHTML)">
+                      <i class="lni lni-trash-can"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- End Table -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end container -->
+
         <hr class="py-4">
         <form action="">
           <div class="row pb-5" [formGroup]="multiupload">
