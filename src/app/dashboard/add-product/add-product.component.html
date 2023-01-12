@@ -157,34 +157,20 @@
             </button>
           </div>
         </form>
-
-
-<ng-template #stockform let-modal>
-  <div class="modal-content card-style2">
-    <div class="modal-header px-0 border-0">
-      <h4 class="text-bold">Add Stock</h4>
-      <button class="border-0 bg-transparent h1" style="outline: none;" (click)="modal.dismiss()">
-        <i class="lni lni-cross-circle"></i>
-      </button>
-    </div>
-    <div class="modal-body px-0">
-      <div class="content">
-        <form action="" [formGroup]="addstock" (submit)="AddStock(modal)">
-          <div class="row pb-5">
-            <div class="mb-3 col-6">
-              <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">SKU</label>
-              <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="12005000602"
-                formControlName="stock_sku" />
-            </div>
-            <div class="mb-3 col-6">
-              <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Stock</label>
-              <input type="number" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="77930"
-                formControlName="stock_stock" />
+        <hr class="py-4">
+        <form action="">
+          <div class="row pb-5" [formGroup]="multiupload">
+            <div class="mb-3 col-12">
+              <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Upload Excel File<a class="ps-2" href="https://docs.google.com/spreadsheets/d/1ouUs4GAHaNATnW2B2Dya7I0FM1XarqQo/edit?usp=sharing&ouid=117508547273747621360&rtpof=true&sd=true" target="_blank"><span class="material-symbols-outlined" style="font-size: 18px; cursor: pointer;">
+                info
+                </span></a></label>
+              <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="form-control border-1 border-light-sm fs-4 mb-2"
+                placeholder="123 VEGETABLE OIL 500ML" formControlName="excelfile" (change)="onFileSelected($event)"/>
             </div>
           </div>
           <div class="action d-flex flex-wrap justify-content-end">
-            <button class="main-btn primary-btn btn-hover m-1">
-              Add Stock
+            <button type="button" class="main-btn primary-btn btn-hover m-1" (click)="AddMultiProduct(modal)">
+              Add Multiple Product
             </button>
           </div>
         </form>
