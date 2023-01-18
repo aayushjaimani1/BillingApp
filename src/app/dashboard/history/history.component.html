@@ -10,7 +10,71 @@
         </div>
         <!-- end row -->
       </div>
-
+      <div class="col-lg-12">
+        <div class="card-style mb-30">
+          <div class="title d-flex flex-wrap align-items-center justify-content-between">
+            <div class="left">
+              <h6 class="text-medium mb-30">Print Invoice</h6>
+            </div>
+          </div>
+          <!-- End Title -->
+          <div class="table-responsive">
+            <table class="table top-selling-table">
+              <thead>
+                <tr>
+                  <th>
+                    <h6 class="text-sm text-medium" >Customer Name</h6>
+                  </th>
+                  <th>
+                    <h6 class="text-sm text-medium" >Purchase Number</h6>
+                  </th>
+                  <th class="min-width">
+                    <h6 class="text-sm text-medium">
+                      Date of Purchase
+                    </h6>
+                  </th>
+                  <th class="min-width">
+                    <h6 class="text-sm text-medium">
+                      Time
+                    </h6>
+                  </th>
+                  <th>
+                    <h6 class="text-sm text-medium">
+                      Print
+                    </h6>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let invoice of invoices">
+                  <td>
+                    <p class="text-sm">{{invoice.customer_name}}</p>
+                  </td>
+                  <td>
+                    <p class="text-sm" #purchase_id>{{invoice.purchase_id}}</p>
+                  </td>
+                  <td>
+                    <p class="text-sm">{{invoice.date}}</p>
+                  </td>
+                  <td>
+                    <p class="text-sm">{{invoice.time}}</p>
+                  </td>
+                  <td>
+                    <div class="action">
+                      <button class="delete" (click)="printInvoice(purchase_id.innerHTML, printable)">
+                        <i class="lni lni-printer"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- End Table -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end container -->
   </section>
 
   <section id="printable-content" #printable>
