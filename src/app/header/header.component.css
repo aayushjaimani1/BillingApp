@@ -1,0 +1,46 @@
+nav{
+    width: 100%;
+    padding: 2.2rem 16.5rem;
+    border-bottom: 2px solid #efefef;
+}
+nav ul{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+nav .auth{
+    width: 18.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.login,.signup{
+    border: none;
+    border-radius: .6rem;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1.4rem;
+    padding: 1rem 2rem;
+}
+.login{
+    background-color: #F1E4FF;
+    color: #8C30F5;
+
+}
+.signup{
+    background-color: #8C30F5;
+    color: white;
+}
+.logo{
+    width: 14rem;
+}
+ul{
+    list-style: none;
+}
+
+@media(max-width: 498px) {
+    nav{
+        padding: 2.2rem 2rem;
+    }
+}
