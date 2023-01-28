@@ -30,7 +30,39 @@
           <span>Coupon</span>
         </a>
       </li>
-
+      <li class="nav-item activ {{tab[3]}}">
+        <a routerLink="../dashboard/invoice" class="d-flex align-items-center" (click)="change([3,0])">
+          <span class="icon pe-3 d-flex align-items-center">
+            <i class="lni lni-write fs-2"></i>
+          </span>
+          <span>Invoice</span>
+        </a>
+      </li>
+      <li class="nav-item activ {{tab[4]}}">
+        <a routerLink="../dashboard/consult" class="d-flex align-items-center" (click)="change([4,0])">
+          <span class="icon pe-3 d-flex align-items-center">
+            <i class="lni lni-customer fs-2"></i>
+          </span>
+          <span>Consult</span>
+        </a>
+      </li>
+      <li class="nav-item activ {{tab[5]}}">
+        <a routerLink="../dashboard/report" class="d-flex align-items-center" (click)="change([5,0])">
+          <span class="icon pe-3 d-flex align-items-center">
+            <i class="lni lni-graph fs-2"></i>
+          </span>
+          <span>Report</span>
+        </a>
+      </li>
+      <li class="nav-item activ {{tab[6]}}">
+        <a routerLink="../dashboard/history" class="d-flex align-items-center" (click)="change([6,0])">
+          <span class="icon pe-3 d-flex align-items-center">
+            <i class="lni lni-text-align-center"></i>
+          </span>
+          <span>History</span>
+        </a>
+      </li>
+    </ul>
   </nav>
 
 </aside>
