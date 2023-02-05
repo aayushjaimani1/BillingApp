@@ -1,0 +1,56 @@
+.row-landing{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    padding-top: 4rem;
+    padding-left: 15.4rem;
+   
+    
+}
+.col-landing{
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.row-landing p{
+    width: 50rem;
+    font-weight: 400;
+    font-size: 1.8rem;
+    padding-top: 1.6rem;
+    padding-bottom: 3.2rem;
+    color: #18191F;
+}
+.row-landing button{
+    background-color: #8C30F5;
+    color: white;
+    padding: 1.2rem 3.2rem;
+    border-radius: 0.6rem;
+    border: none;
+    font-weight: 500;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.col-landing h1{
+    width: 55rem;
+    color: #18191F;
+    font-size: 8rem;
+    font-weight: 800;
+}
+.card-landing{
+    width: 58rem;
+    height: 58rem;
+    border-radius: 50%;
+    background-color: #D6B1FF;
+}
+.row-landing img{
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    border-radius: 0.8rem;
+    padding-top: 2.5rem;
+    padding-bottom: 8rem;
+    padding-left: 14.7rem;
+
+}
