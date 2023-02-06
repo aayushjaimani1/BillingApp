@@ -134,7 +134,71 @@
             </div>
           </div>
 
-
+        <!-- branch-information -->
+          <div class="company-information {{signupForm[2]}}" formGroupName="branchInformation">
+            <div class="alert alert-danger mb-5 fs-4 {{errorAlert}}" role="alert">
+              {{errorMessage}}
+            </div>
+            <div class="row pb-3">
+              
+              <div class="mb-3 col-12">
+                <label class="form-label pb-1 text-light">Number of Branch</label>
+                <div>
+                  <select required="required" class="form-select form-select-lg border-1 border-light-sm text-light mb-2" #selectbranch (change)="branch(selectbranch)" formControlName="noBranch">
+                    <option value="0" selected>Number of Branch</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div formArrayName="fields">
+              <div *ngFor="let n of numSequence(noOfBranch); let i = index;" >
+                <div class="row pb-3" [formGroupName]="i" >
+                  <div class="mb-3 col-8">
+                    <label class="form-label pb-1">Branch name {{i + 1}}</label>
+                    <input type="text" formControlName="field1" class="form-control border-light-sm text-light mb-2"
+                      placeholder="Darpan 1876" />
+                    <div class="form-text text-danger"></div>
+                  </div>
+                  <div class="mb-3 col-4">
+                    <label class="form-label pb-1">Location</label>
+                    <input type="text" formControlName="field2" class="form-control border-light-sm text-light mb-2" placeholder="Delhi" />
+                    <div class="form-text text-danger"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row pb-4">
+              <div class="mb-3 col-6">
+                <label class="form-label pb-1">Password</label>
+                <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="ABC@29378." formControlName="password"/>
+                <div class="form-text text-danger" *ngIf="getPassword?.hasError('minlength') && getPassword?.touched && !getPassword?.hasError('required')">Minimum 8 character, 1 special character, 1 digit, 1 capital and 1 small alphabet required</div>
+                <div class="form-text text-danger" *ngIf="getPassword?.hasError('required') && getPassword?.touched && !getPassword?.hasError('minlength')">This field is required</div>
+              </div>
+              <div class="mb-3 col-6">
+                <label class="form-label pb-1">Email</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="ABC@29378." formControlName="email"/>
+                <div class="form-text text-danger" *ngIf="getEmail?.hasError('email') && getEmail?.touched && !getEmail?.hasError('required')">Email should be like Example@gmail.com</div>
+                <div class="form-text text-danger" *ngIf="getEmail?.hasError('required') && getEmail?.touched && !getEmail?.hasError('email')">This field is required</div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center pb-4 px-2">
+              <div>
+                <div class="form-text text-light fs-5">*Already have an account ? <a routerLink="../login"
+                    class="fw-bold text-primary">Login</a></div>
+              </div>
+              <div class="d-flex">
+                <div class="px-3">
+                  <button
+                  class="next-btn py-3 px-5 fs-5 fw-bold bg-transparent border border-0 text-primary rounded-1" type="button" (click)="goBack()">Go back</button>
+                </div>
+                <button type="submit"
+                  class="next-btn py-3 px-5 fs-5 fw-bold bg-transparent border border-2 border-primary text-primary rounded-1" type="submit">Submit</button>
+              </div>
+            </div>
+          </div>
       </form>
     </div>
   </div>
