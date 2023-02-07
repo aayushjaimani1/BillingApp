@@ -21,6 +21,14 @@
   font-weight: 600;
   font-size: 1.4rem;
 }
+
+.register-form form select{
+  padding: .9rem 1.9rem;
+  outline: none !important;
+
+  font-weight: 600;
+  font-size: 1.4rem;
+}
 .register-form form input::placeholder {
     color: #E4E4E4;
 }

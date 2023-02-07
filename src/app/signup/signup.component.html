@@ -6,62 +6,186 @@
   <div class="px-25">
     <div class="d-flex justify-content-between">
       <div class="progress-line">
-        <p class="text-primary">1. Company information</p>
-        <div class="bar-1 bg-primary"></div>
+        <p class="{{progress[0].text}}">1. Company information</p>
+        <div class="bar-1 {{progress[0].bg}}"></div>
       </div>
       <div class="progress-line">
-        <p class="text-light-sm">2. Payment information</p>
-        <div class="bar-1 bg-light-sm"></div>
+        <p class="{{progress[1].text}}">2. Payment information</p>
+        <div class="bar-1 {{progress[1].bg}}"></div>
       </div>
       <div class="progress-line">
-        <p class="text-light-sm">3. Branch information</p>
-        <div class="bar-1 bg-light-sm"></div>
+        <p class="{{progress[2].text}}">3. Branch information</p>
+        <div class="bar-1 {{progress[2].bg}}"></div>
       </div>
     </div>
-    <div class="p-5 my-5 border border-3 border-secondary-subtle rounded-3 register-form">
-      <form class="py-2">
-        <div class="row pb-3">
-          <div class="mb-3 col-4">
-            <label class="form-label pb-1 text-danger">GST Number</label>
-            <input type="email" class="form-control border-1 border-danger text-light mb-2" placeholder="0000-000"/>
-            <div class="form-text text-danger">We'll never share your email with anyone else.</div>
-          </div>
-          <div class="mb-3 col-8">
-            <label class="form-label pb-1">Name</label>
-            <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="Samsung Store"/>
-            <div class="form-text text-danger"></div>
-          </div>
-        </div>
-        <div class="row pb-3">
-          <div class="mb-3 col-8">
-            <label class="form-label pb-1">Address</label>
-            <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="B-203, Sarojni Nagar, Bangalore"/>
-            <div class="form-text text-danger"></div>
-          </div>
-          <div class="mb-3 col-4">
-            <label class="form-label pb-1">Pincode</label>
-            <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="403110"/>
-            <div class="form-text text-danger"></div>
-          </div>
-        </div>
-        <div class="row pb-4">
-          <div class="mb-3 col-6">
-            <label class="form-label pb-1">Industry</label>
-            <input type="email" class="form-control border-light-sm text-light mb-2"  placeholder="Electronics"/>
-            <div class="form-text text-danger"></div>
-          </div>
-          <div class="mb-3 col-6">
-            <label class="form-label pb-1">State</label>
-            <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="Karnataka"/>
-            <div class="form-text text-danger"></div>
-          </div>
-        </div>
-        <div class="d-flex justify-content-between align-items-center pb-4 px-2">
-            <div>
-                <div class="form-text text-light fs-5">*Already have an account ? <a routerLink="../login" class="fw-bold text-primary">Login</a></div>
+    <div class="p-5 my-5 border border-3 border-secondary-subtle rounded-3 register-form overflow-hidden">
+      <form class="py-2" #signup>
+
+        <!-- company information -->
+          <div class="company-information {{signupForm[0]}}">
+            <div class="row pb-3">
+              <div class="mb-3 col-4">
+                <label class="form-label pb-1 text-danger">GST Number</label>
+                <input type="email" class="form-control border-1 border-danger text-light mb-2" placeholder="0000-000" />
+                <div class="form-text text-danger">We'll never share your email with anyone else.</div>
+              </div>
+              <div class="mb-3 col-8">
+                <label class="form-label pb-1">Name</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="Samsung Store" />
+                <div class="form-text text-danger"></div>
+              </div>
             </div>
-            <div>
-              <button class="next-btn py-3 px-5 fs-5 fw-bold bg-transparent border border-2 border-primary text-primary rounded-1">Proceed</button>
+            <div class="row pb-3">
+              <div class="mb-3 col-8">
+                <label class="form-label pb-1">Address</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2"
+                  placeholder="B-203, Sarojni Nagar, Bangalore" />
+                <div class="form-text text-danger"></div>
+              </div>
+              <div class="mb-3 col-4">
+                <label class="form-label pb-1">Pincode</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="403110" />
+                <div class="form-text text-danger"></div>
+              </div>
+            </div>
+            <div class="row pb-4">
+              <div class="mb-3 col-6">
+                <label class="form-label pb-1">Industry</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="Electronics" />
+                <div class="form-text text-danger"></div>
+              </div>
+              <div class="mb-3 col-6">
+                <label class="form-label pb-1">State</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="Karnataka" />
+                <div class="form-text text-danger"></div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center pb-4 px-2">
+              <div>
+                <div class="form-text text-light fs-5">*Already have an account ? <a routerLink="../login"
+                    class="fw-bold text-primary">Login</a></div>
+              </div>
+              <div>
+                <button
+                  class="next-btn py-3 px-5 fs-5 fw-bold bg-transparent border border-2 border-primary text-primary rounded-1" type="button" (click)="proceed()">Proceed</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- payment-information -->
+          <div class="company-information {{signupForm[1]}}">
+            <div class="alert alert-success mb-5 fs-4" role="alert">
+              Create an Instamojo account
+            </div>
+            <div class="row pb-3">
+              
+              <div class="mb-3 col-4">
+                <label class="form-label pb-1 text-danger">Instamojo Username</label>
+                <input type="email" class="form-control border-1 border-danger text-light mb-2" placeholder="bahadur_darpan" />
+                <div class="form-text text-danger">We'll never share your email with anyone else.</div>
+              </div>
+              <div class="mb-3 col-8">
+                <label class="form-label pb-1">Private API Key</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="c5e2ca73c1a597e2c9c9feab4c9" />
+                <div class="form-text text-danger"></div>
+              </div>
+            </div>
+            <div class="row pb-3">
+              <div class="mb-3 col-8">
+                <label class="form-label pb-1">Private Auth Token</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2"
+                  placeholder="ab4aeaa7a5ab1c922590cbef728" />
+                <div class="form-text text-danger"></div>
+              </div>
+              <div class="mb-3 col-4">
+                <label class="form-label pb-1">Private Salt</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="874c52c2bbb24452b074e5536806f3ef" />
+                <div class="form-text text-danger"></div>
+              </div>
+            </div>
+            <div class="row pb-4">
+              <div class="mb-3 col-6">
+                <label class="form-label pb-1">Client Id</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="Electronics" />
+                <div class="form-text text-danger"></div>
+              </div>
+              <div class="mb-3 col-6">
+                <label class="form-label pb-1">Client Secret</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="Karnataka" />
+                <div class="form-text text-danger"></div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center pb-4 px-2">
+              <div>
+                <div class="form-text text-light fs-5">*Already have an account ? <a routerLink="../login"
+                    class="fw-bold text-primary">Login</a></div>
+              </div>
+              <div class="d-flex">
+                <div class="px-3">
+                  <button
+                  class="next-btn py-3 px-5 fs-5 fw-bold bg-transparent border border-0 text-primary rounded-1" type="button" (click)="goBack()">Go back</button>
+                </div>
+                <button
+                  class="next-btn py-3 px-5 fs-5 fw-bold bg-transparent border border-2 border-primary text-primary rounded-1" type="button" (click)="proceed()">Proceed</button>
+              </div>
+            </div>
+          </div>
+
+        <!-- branch-information -->
+          <div class="company-information {{signupForm[2]}}">
+            <div class="row pb-3">
+              
+              <div class="mb-3 col-12">
+                <label class="form-label pb-1 text-danger">Number of Branch</label>
+                <div>
+                  <select class="form-select form-select-lg border-1 border-danger text-light mb-2">
+                    <option selected>Number of Branch</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+                <div class="form-text text-danger">We'll never share your email with anyone else.</div>
+              </div>
+            </div>
+            <div class="row pb-3">
+              <div class="mb-3 col-8">
+                <label class="form-label pb-1">Branch name</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2"
+                  placeholder="Darpan 1876" />
+                <div class="form-text text-danger"></div>
+              </div>
+              <div class="mb-3 col-4">
+                <label class="form-label pb-1">Location</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="Delhi" />
+                <div class="form-text text-danger"></div>
+              </div>
+            </div>
+            <div class="row pb-4">
+              <div class="mb-3 col-6">
+                <label class="form-label pb-1">Password</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="Electronics" />
+                <div class="form-text text-danger"></div>
+              </div>
+              <div class="mb-3 col-6">
+                <label class="form-label pb-1">Confirm password</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="Karnataka" />
+                <div class="form-text text-danger"></div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center pb-4 px-2">
+              <div>
+                <div class="form-text text-light fs-5">*Already have an account ? <a routerLink="../login"
+                    class="fw-bold text-primary">Login</a></div>
+              </div>
+              <div class="d-flex">
+                <div class="px-3">
+                  <button
+                  class="next-btn py-3 px-5 fs-5 fw-bold bg-transparent border border-0 text-primary rounded-1" type="button" (click)="goBack()">Go back</button>
+                </div>
+                <button type="submit"
+                  class="next-btn py-3 px-5 fs-5 fw-bold bg-transparent border border-2 border-primary text-primary rounded-1" type="button" (click)="formReset(signup)">Submit</button>
+              </div>
             </div>
           </div>
       </form>
