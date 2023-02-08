@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -6,6 +7,56 @@ import { Component } from '@angular/core';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
+
+  signupForm = ["","d-none","d-none"];
+  signupFormNo = 0;
+  noOfBranch = 0;
+
+  billingSignupForm = this.fb.group({
+
+    companyInformation: this.fb.group({
+      gstNumber: [''],
+      name: [''],
+      address: [''],
+      pincode: [''],
+      industry: [''],
+      state: ['']
+    }),
+    paymentInformation: this.fb.group({
+      instamojoUsername: [''],
+      privateAPIKey: [''],
+      privateAuthToken: [''],
+      privateSalt: [''],
+      clientID: [''],
+      ClientSecret: ['']
+    }),
+    branchInformation: this.fb.group({
+      noBranch: [0],
+      fields: this.fb.array([]),
+      password: [''],
+      cnfPassword: ['']
+    })
+  });
+
+  constructor(private fb: FormBuilder){
+
+  }
+
+  updateFields(){
+    let fields = this.billingSignupForm.get('branchInformation.fields') as FormArray;
+    while(fields.length){
+      fields.removeAt(0);
+    }
+    for(let i = 0 ; i < this.noOfBranch ; i++){
+      fields.push(
+        this.fb.group({
+          field1: [''],
+          field2: [''],
+        })
+      );
+    }
+  }
+
 
   progress = [
     {
@@ -21,8 +72,7 @@ export class SignupComponent {
       bg: "bg-light-sm"
     }
   ];
-  signupForm = ["","d-none","d-none"];
-  signupFormNo = 0;
+  
 
   proceed(){
     if(this.signupFormNo == 0){
@@ -66,5 +116,19 @@ export class SignupComponent {
     this.goBack();
     this.goBack();
     signup.reset();
+  }
+
+  branch(selectbranch:HTMLSelectElement){
+    this.noOfBranch = Number(selectbranch.value);
+    this.updateFields();
+  }
+
+  numSequence(n: number): Array<number> {
+    return Array(n);
+  }
+
+  demo(signup: HTMLFormElement){
+    console.log(this.billingSignupForm.value);
+    this.formReset(signup);
   }
 }
