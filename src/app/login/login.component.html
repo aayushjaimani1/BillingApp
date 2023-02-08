@@ -13,7 +13,28 @@
                         <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="@darpanBahadur" formControlName="username"/>
                         <div class="form-text text-danger fs-6" *ngIf="getUsername?.hasError('required') && getUsername?.touched">This field is required</div>
                     </div>
-
+                    <div class="pb-4">
+                        <label class="form-label pb-1 text-light">Password</label>
+                        <input type="password" class="form-control border-light-sm text-light mb-2" placeholder="ABC@123" formControlName="password"/>
+                        <div class="form-text text-danger fs-6" *ngIf="getPassword?.hasError('required') && getPassword?.touched">This field is required</div>
+                    </div>
+                    <div class="pb-5">
+                        <div class="d-flex align-items-center justify-content-between remember-me">
+                            <div class="d-flex align-items-center">
+                                <input type="checkbox" id="checkbox" value="">
+                                <p class="px-2 fs-5">Remember me for 30 days</p>
+                            </div>
+                            <div>
+                                <a href="" class="fs-5">Forgot Password</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pb-3">
+                        <input type="submit" class="py-3 px-5 fs-5 fw-bold bg-primary border border-2 border-primary text-white rounded-1" value="Log in">
+                    </div>
+                    <div class="pb-4">
+                        <input type="button" routerLink="../signup" class="py-3 px-5 fs-5 fw-bold bg-transparent border border-2 border-primary text-primary rounded-1" value="Sign up">
+                    </div>
                 </form>
             </div>
         </div>
