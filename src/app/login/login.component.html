@@ -1,9 +1,1 @@
-<form [formGroup]="form">
-    <select formControlName="numberOfFields">
-      <option *ngFor="let number of numbers" [value]="number">{{number}}</option>
-    </select>
-    <ng-container *ngFor="let i of form.get('fields')?.value; let j = index">
-      <input formControlName="{{j}}" type="text">
-    </ng-container>
-    <button (click)="demo()">sd</button>
-</form>
+<p>Login Works</p>

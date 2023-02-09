@@ -25,14 +25,16 @@
           <div class="company-information {{signupForm[0]}}" formGroupName="companyInformation">
             <div class="row pb-3">
               <div class="mb-3 col-4">
-                <label class="form-label pb-1 text-danger">GST Number</label>
-                <input type="number" class="form-control border-1 border-danger text-light mb-2" placeholder="0000-000" formControlName="gstNumber"/>
-                <div class="form-text text-danger">We'll never share your email with anyone else.</div>
+                <label class="form-label pb-1 text-light">GST Number</label>
+                <input type="text" class="form-control border-1 border-light-sm text-light mb-2" placeholder="0000-000-000-000-00" formControlName="gstNumber"/>
+                <div class="form-text text-danger" *ngIf="(gstNumber?.hasError('minlength') || gstNumber?.hasError('pattern')) && !gstNumber?.hasError('required')">GST Number should be 15 digits</div>
+                <div class="form-text text-danger" *ngIf="gstNumber?.hasError('required') && gstNumber?.touched && !gstNumber?.hasError('minlength')">This field is required</div>
               </div>
               <div class="mb-3 col-8">
                 <label class="form-label pb-1">Name</label>
                 <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="Samsung Store" formControlName="name"/>
-                <div class="form-text text-danger"></div>
+                <div class="form-text text-danger" *ngIf="getName?.hasError('minlength') && getName?.touched && !getName?.hasError('required')">Minimum 8 characters required</div>
+                <div class="form-text text-danger" *ngIf="getName?.hasError('required') && getName?.touched && !getName?.hasError('minlength')">This field is required</div>
               </div>
             </div>
             <div class="row pb-3">
@@ -40,24 +42,25 @@
                 <label class="form-label pb-1">Address</label>
                 <input type="text" class="form-control border-light-sm text-light mb-2"
                   placeholder="B-203, Sarojni Nagar, Bangalore" formControlName="address"/>
-                <div class="form-text text-danger"></div>
+                  <div class="form-text text-danger" *ngIf="getAddress?.hasError('required') && getAddress?.touched">This field is required</div>
               </div>
               <div class="mb-3 col-4">
                 <label class="form-label pb-1">Pincode</label>
-                <input type="number" class="form-control border-light-sm text-light mb-2" placeholder="403110" formControlName="pincode"/>
-                <div class="form-text text-danger"></div>
+                <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="403110" formControlName="pincode"/>
+                <div class="form-text text-danger" *ngIf="(getPincode?.hasError('minlength') || getPincode?.hasError('pattern')) && getPincode?.touched && !getPincode?.hasError('required')">Pincode should have 6 digits</div>
+                <div class="form-text text-danger" *ngIf="getPincode?.hasError('required') && getPincode?.touched && !getPincode?.hasError('minlength')">This field is required</div>
               </div>
             </div>
             <div class="row pb-4">
               <div class="mb-3 col-6">
                 <label class="form-label pb-1">Industry</label>
                 <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="Electronics" formControlName="industry"/>
-                <div class="form-text text-danger"></div>
+                <div class="form-text text-danger" *ngIf="getIndustry?.hasError('required') && getIndustry?.touched">This field is required</div>
               </div>
               <div class="mb-3 col-6">
                 <label class="form-label pb-1">State</label>
                 <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="Karnataka" formControlName="state"/>
-                <div class="form-text text-danger"></div>
+                <div class="form-text text-danger" *ngIf="getState?.hasError('required') && getState?.touched">This field is required</div>
               </div>
             </div>
             <div class="d-flex justify-content-between align-items-center pb-4 px-2">
@@ -80,14 +83,14 @@
             <div class="row pb-3">
               
               <div class="mb-3 col-4">
-                <label class="form-label pb-1 text-danger">Instamojo Username</label>
-                <input type="text" class="form-control border-1 border-danger text-light mb-2" placeholder="bahadur_darpan" formControlName="instamojoUsername"/>
-                <div class="form-text text-danger">We'll never share your email with anyone else.</div>
+                <label class="form-label pb-1 text-light">Instamojo Username</label>
+                <input type="text" class="form-control border-1 border-light-sm text-light mb-2" placeholder="bahadur_darpan" formControlName="instamojoUsername"/>
+                <div class="form-text text-danger" *ngIf="getInstamojo?.hasError('required') && getInstamojo?.touched">This field is required</div>
               </div>
               <div class="mb-3 col-8">
                 <label class="form-label pb-1">Private API Key</label>
                 <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="c5e2ca73c1a597e2c9c9feab4c9" formControlName="privateAPIKey"/>
-                <div class="form-text text-danger"></div>
+                <div class="form-text text-danger" *ngIf="getPrivateAPIKey?.hasError('required') && getPrivateAPIKey?.touched">This field is required</div>
               </div>
             </div>
             <div class="row pb-3">
@@ -95,24 +98,24 @@
                 <label class="form-label pb-1">Private Auth Token</label>
                 <input type="text" class="form-control border-light-sm text-light mb-2"
                   placeholder="ab4aeaa7a5ab1c922590cbef728" formControlName="privateAuthToken"/>
-                <div class="form-text text-danger"></div>
+                  <div class="form-text text-danger" *ngIf="getPrivateAuthToken?.hasError('required') && getPrivateAuthToken?.touched">This field is required</div>
               </div>
               <div class="mb-3 col-4">
                 <label class="form-label pb-1">Private Salt</label>
                 <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="874c52c2bbb24452b074e5536806f3ef" formControlName="privateSalt"/>
-                <div class="form-text text-danger"></div>
+                <div class="form-text text-danger" *ngIf="getPrivateSalt?.hasError('required') && getPrivateSalt?.touched">This field is required</div>
               </div>
             </div>
             <div class="row pb-4">
               <div class="mb-3 col-6">
                 <label class="form-label pb-1">Client Id</label>
                 <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="test_r878wf3QaYN7Dbgz78ShsxjPDcIKTt2BTnQ" formControlName="clientID"/>
-                <div class="form-text text-danger"></div>
+                <div class="form-text text-danger" *ngIf="getClientID?.hasError('required') && getClientID?.touched">This field is required</div>
               </div>
               <div class="mb-3 col-6">
                 <label class="form-label pb-1">Client Secret</label>
                 <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="test_90bE1MGbZRK1CmDRgPYQHd1G9BKDxa0Ny4hczpXJbecCrJIo2xF8CumwPN2X2Ee3UNE7CMwHeGxE0FA0LGLAvecpUyTgh1KLuOwQkWfR55i7cQxsle4OAdElNdY" formControlName="ClientSecret"/>
-                <div class="form-text text-danger"></div>
+                <div class="form-text text-danger" *ngIf="getClientSecret?.hasError('required') && getClientSecret?.touched">This field is required</div>
               </div>
             </div>
             <div class="d-flex justify-content-between align-items-center pb-4 px-2">
@@ -136,16 +139,15 @@
             <div class="row pb-3">
               
               <div class="mb-3 col-12">
-                <label class="form-label pb-1 text-danger">Number of Branch</label>
+                <label class="form-label pb-1 text-light">Number of Branch</label>
                 <div>
-                  <select class="form-select form-select-lg border-1 border-danger text-light mb-2" #selectbranch (change)="branch(selectbranch)" formControlName="noBranch">
+                  <select required="required" class="form-select form-select-lg border-1 border-light-sm text-light mb-2" #selectbranch (change)="branch(selectbranch)" formControlName="noBranch">
                     <option value="0" selected>Number of Branch</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
                   </select>
                 </div>
-                <div class="form-text text-danger">We'll never share your email with anyone else.</div>
               </div>
             </div>
             <div formArrayName="fields">
@@ -169,12 +171,14 @@
               <div class="mb-3 col-6">
                 <label class="form-label pb-1">Password</label>
                 <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="ABC@29378." formControlName="password"/>
-                <div class="form-text text-danger"></div>
+                <div class="form-text text-danger" *ngIf="getPassword?.hasError('minlength') && getPassword?.touched && !getPassword?.hasError('required')">Minimum 8 character, 1 special character, 1 digit, 1 capital and 1 small alphabet required</div>
+                <div class="form-text text-danger" *ngIf="getPassword?.hasError('required') && getPassword?.touched && !getPassword?.hasError('minlength')">This field is required</div>
               </div>
               <div class="mb-3 col-6">
-                <label class="form-label pb-1">Confirm password</label>
-                <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="ABC@29378." formControlName="cnfPassword"/>
-                <div class="form-text text-danger"></div>
+                <label class="form-label pb-1">Email</label>
+                <input type="email" class="form-control border-light-sm text-light mb-2" placeholder="ABC@29378." formControlName="email"/>
+                <div class="form-text text-danger" *ngIf="getEmail?.hasError('email') && getEmail?.touched && !getEmail?.hasError('required')">Email should be like Example@gmail.com</div>
+                <div class="form-text text-danger" *ngIf="getEmail?.hasError('required') && getEmail?.touched && !getEmail?.hasError('email')">This field is required</div>
               </div>
             </div>
             <div class="d-flex justify-content-between align-items-center pb-4 px-2">

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -8,56 +8,12 @@ import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 })
 export class SignupComponent {
 
+
+
+  // variables
   signupForm = ["","d-none","d-none"];
-  signupFormNo = 0;
+  private signupFormNo = 0;
   noOfBranch = 0;
-
-  billingSignupForm = this.fb.group({
-
-    companyInformation: this.fb.group({
-      gstNumber: [''],
-      name: [''],
-      address: [''],
-      pincode: [''],
-      industry: [''],
-      state: ['']
-    }),
-    paymentInformation: this.fb.group({
-      instamojoUsername: [''],
-      privateAPIKey: [''],
-      privateAuthToken: [''],
-      privateSalt: [''],
-      clientID: [''],
-      ClientSecret: ['']
-    }),
-    branchInformation: this.fb.group({
-      noBranch: [0],
-      fields: this.fb.array([]),
-      password: [''],
-      cnfPassword: ['']
-    })
-  });
-
-  constructor(private fb: FormBuilder){
-
-  }
-
-  updateFields(){
-    let fields = this.billingSignupForm.get('branchInformation.fields') as FormArray;
-    while(fields.length){
-      fields.removeAt(0);
-    }
-    for(let i = 0 ; i < this.noOfBranch ; i++){
-      fields.push(
-        this.fb.group({
-          field1: [''],
-          field2: [''],
-        })
-      );
-    }
-  }
-
-
   progress = [
     {
       text: "text-primary",
@@ -72,7 +28,117 @@ export class SignupComponent {
       bg: "bg-light-sm"
     }
   ];
+
+  billingSignupForm = this.fb.group({
+
+    companyInformation: this.fb.group({
+      gstNumber: ["",[Validators.required,Validators.minLength(15),Validators.pattern('[0-9]*')]],
+      name: ['',[Validators.required,Validators.minLength(8)]],
+      address: ['',Validators.required],
+      pincode: ['',[Validators.required,Validators.minLength(6),Validators.pattern('[0-9]*')]],
+      industry: ['',Validators.required],
+      state: ['',Validators.required]
+    }),
+    paymentInformation: this.fb.group({
+      instamojoUsername: ['',Validators.required],
+      privateAPIKey: ['',Validators.required],
+      privateAuthToken: ['',Validators.required],
+      privateSalt: ['',Validators.required],
+      clientID: ['',Validators.required],
+      ClientSecret: ['',Validators.required]
+    }),
+    branchInformation: this.fb.group({
+      noBranch: [0],
+      fields: this.fb.array([]),
+      password: ['',[Validators.required,Validators.minLength(8)]],
+      email: ['',[Validators.email,Validators.required]]
+    })
+  });
+
+
+
+  // constructor
+  constructor(private fb: FormBuilder){
+
+  }
+
+
+
+  // getters
+  get gstNumber(){
+    return this.billingSignupForm.get('companyInformation.gstNumber');
+  }
+
+  get getName(){
+    return this.billingSignupForm.get('companyInformation.name');
+  }
+
+  get getAddress(){
+    return this.billingSignupForm.get('companyInformation.address');
+  }
+
+  get getPincode(){
+    return this.billingSignupForm.get('companyInformation.pincode');
+  }
+
+  get getIndustry(){
+    return this.billingSignupForm.get('companyInformation.industry');
+  }
+
+  get getState(){
+    return this.billingSignupForm.get('companyInformation.state');
+  }
+
+  get getInstamojo(){
+    return this.billingSignupForm.get('paymentInformation.instamojoUsername');
+  }
+
+  get getPrivateAPIKey(){
+    return this.billingSignupForm.get('paymentInformation.privateAPIKey');
+  }
+
+  get getPrivateAuthToken(){
+    return this.billingSignupForm.get('paymentInformation.privateAuthToken');
+  }
   
+  get getPrivateSalt(){
+    return this.billingSignupForm.get('paymentInformation.privateSalt');
+  }
+
+  get getClientID(){
+    return this.billingSignupForm.get('paymentInformation.clientID');
+  }
+
+  get getClientSecret(){
+    return this.billingSignupForm.get('paymentInformation.ClientSecret');
+  }
+
+  get getPassword(){
+    return this.billingSignupForm.get('branchInformation.password');
+  }
+
+  get getEmail(){
+    return this.billingSignupForm.get('branchInformation.email');
+  }
+
+
+
+  // functions
+
+  private updateFields(){
+    let fields = this.billingSignupForm.get('branchInformation.fields') as FormArray;
+    while(fields.length){
+      fields.removeAt(0);
+    }
+    for(let i = 0 ; i < this.noOfBranch ; i++){
+      fields.push(
+        this.fb.group({
+          field1: [''],
+          field2: [''],
+        })
+      );
+    }
+  }
 
   proceed(){
     if(this.signupFormNo == 0){
@@ -112,7 +178,7 @@ export class SignupComponent {
     }
   }
 
-  formReset(signup: HTMLFormElement){
+  private formReset(signup: HTMLFormElement){
     this.goBack();
     this.goBack();
     signup.reset();
@@ -128,7 +194,7 @@ export class SignupComponent {
   }
 
   demo(signup: HTMLFormElement){
-    console.log(this.billingSignupForm.value);
+    console.log(this.billingSignupForm.value)
     this.formReset(signup);
   }
 }
