@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormBuilder, FormArray, Validators } from '@angular/forms';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
 
 
 
@@ -14,6 +14,7 @@ export class SignupComponent {
   signupForm = ["","d-none","d-none"];
   private signupFormNo = 0;
   noOfBranch = 0;
+  errorAlert = "d-none";
   progress = [
     {
       text: "text-primary",
@@ -60,6 +61,11 @@ export class SignupComponent {
   // constructor
   constructor(private fb: FormBuilder){
 
+  }
+
+  // lifecycle hook 
+  ngOnInit(): void {
+    
   }
 
 
@@ -125,7 +131,7 @@ export class SignupComponent {
 
   // functions
 
-  private updateFields(){
+  private updateFields(): void{
     let fields = this.billingSignupForm.get('branchInformation.fields') as FormArray;
     while(fields.length){
       fields.removeAt(0);
@@ -140,7 +146,7 @@ export class SignupComponent {
     }
   }
 
-  proceed(){
+  proceed(): void{
     if(this.signupFormNo == 0){
       this.signupForm[0] = "d-none";
       this.signupForm[1] = "";
@@ -159,7 +165,7 @@ export class SignupComponent {
     }
   }
 
-  goBack(){
+  goBack(): void{
     if(this.signupFormNo == 1){
       this.signupForm[0] = "";
       this.signupForm[1] = "d-none";
@@ -178,13 +184,13 @@ export class SignupComponent {
     }
   }
 
-  private formReset(signup: HTMLFormElement){
+  private formReset(signup: HTMLFormElement): void{
     this.goBack();
     this.goBack();
     signup.reset();
   }
 
-  branch(selectbranch:HTMLSelectElement){
+  branch(selectbranch:HTMLSelectElement): void{
     this.noOfBranch = Number(selectbranch.value);
     this.updateFields();
   }
@@ -193,8 +199,17 @@ export class SignupComponent {
     return Array(n);
   }
 
-  demo(signup: HTMLFormElement){
-    console.log(this.billingSignupForm.value)
-    this.formReset(signup);
+  CreateUser(signup: HTMLFormElement){
+    if(this.billingSignupForm.valid){
+      console.log(this.billingSignupForm.value)
+      this.formReset(signup);
+    }
+    else{
+      this.errorAlert = "";
+      setTimeout(()=> {
+        this.errorAlert = "d-none";
+      },5000);
+    }
+    
   }
 }

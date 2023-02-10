@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="p-5 my-5 border border-3 border-secondary-subtle rounded-3 register-form overflow-hidden">
-      <form class="py-2" [formGroup]="billingSignupForm" (submit)="demo(signup)"  #signup>
+      <form class="py-2" [formGroup]="billingSignupForm" (submit)="CreateUser(signup)"  #signup>
 
         <!-- company information -->
           <div class="company-information {{signupForm[0]}}" formGroupName="companyInformation">
@@ -136,6 +136,9 @@
 
         <!-- branch-information -->
           <div class="company-information {{signupForm[2]}}" formGroupName="branchInformation">
+            <div class="alert alert-danger mb-5 fs-4 {{errorAlert}}" role="alert">
+              Some fields are empty, Please fill all the required fields.
+            </div>
             <div class="row pb-3">
               
               <div class="mb-3 col-12">
