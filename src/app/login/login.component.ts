@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -7,5 +7,30 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  constructor(private fb: FormBuilder){
 
+  }
+
+  loginForm = this.fb.group({
+    username: ['',Validators.required],
+    password: ['',Validators.required]
+  });
+
+  get getUsername(){
+    return this.loginForm.get('username');
+  }
+
+  get getPassword(){
+    return this.loginForm.get('password');
+  }
+
+  loginUser(login: HTMLFormElement){
+    if(this.loginForm.valid){
+      console.log(this.loginForm.value);
+      login.reset();
+    }
+    else{
+      alert("Please fill all the required fields.");
+    }
+  }
 }
