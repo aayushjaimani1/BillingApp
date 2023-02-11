@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
@@ -59,8 +60,8 @@ export class SignupComponent implements OnInit {
 
 
   // constructor
-  constructor(private fb: FormBuilder){
-
+  constructor(private fb: FormBuilder, private http: HttpClient){
+    
   }
 
   // lifecycle hook 
