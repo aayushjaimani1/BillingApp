@@ -17,9 +17,7 @@
             if(!$this->conn){
                 die("Connection failed");
             }
-            else{
-                return $this->conn;
-            }
+            return $this->conn;
         }
     }
 
