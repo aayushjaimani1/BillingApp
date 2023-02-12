@@ -36,30 +36,41 @@
             $this->httpMethod = $_SERVER['REQUEST_METHOD'];
 
             if($this->httpMethod == "POST"){
-                $this->gstNumber = $_POST['gstNumber'];
-                $this->name = $_POST['name'];
-                $this->address = $_POST['address'];
-                $this->pincode = $_POST['pincode'];
-                $this->industry = $_POST['industry'];
-                $this->state = $_POST['state'];
+                $this->gstNumber = strip_tags(pg_escape_string($this->db,trim($_POST['gstNumber'])));
+                $this->name = strip_tags(pg_escape_string($this->db,trim($_POST['name'])));
+                $this->address = strip_tags(pg_escape_string($this->db,trim($_POST['address'])));
+                $this->pincode = strip_tags(pg_escape_string($this->db,trim($_POST['pincode'])));
+                $this->industry = strip_tags(pg_escape_string($this->db,trim($_POST['industry'])));
+                $this->state = strip_tags(pg_escape_string($this->db,trim($_POST['state'])));
 
-                $this->instamojo = $_POST['instamojo'];
-                $this->APIKey = $_POST['apikey'];
-                $this->authToken = $_POST['authtoken'];
-                $this->privateSalt = $_POST['privatesalt'];
-                $this->clientId = $_POST['clientId'];
-                $this->clientSecret = $_POST['clientsecret'];
+                $this->instamojo = md5(strip_tags(pg_escape_string($this->db,trim($_POST['instamojo']))));
+                $this->APIKey = md5(strip_tags(pg_escape_string($this->db,trim($_POST['apikey']))));
+                $this->authToken = md5(strip_tags(pg_escape_string($this->db,trim($_POST['authtoken']))));
+                $this->privateSalt = md5(strip_tags(pg_escape_string($this->db,trim($_POST['privatesalt']))));
+                $this->clientId = md5(strip_tags(pg_escape_string($this->db,trim($_POST['clientId']))));
+                $this->clientSecret = md5(strip_tags(pg_escape_string($this->db,trim($_POST['clientsecret']))));
                 
-                $this->noOfBranch = $_POST['noofbranch'];
-                $this->branches = $_POST['branches'];
-                $this->password = $_POST['password'];
-                $this->email = $_POST['email'];
+                $this->noOfBranch = strip_tags(pg_escape_string($this->db,trim($_POST['noofbranch'])));
+                $this->branches = strip_tags(pg_escape_string($this->db,trim($_POST['branches'])));
+                $this->password = md5(strip_tags(pg_escape_string($this->db,trim($_POST['password']))));
+                $this->email = strip_tags(pg_escape_string($this->db,trim($_POST['email'])));
                 
                 if($this->checkUser()){
-
+                    http_response_code(400);
+                    echo "User already exists";
                 }
                 else{
-                    
+                    $insert_user_query = "INSERT INTO users(gst_number, username,user_address, pincode, industry, user_state, payment_instamojo, payment_api_key, payment_auth_token, payment_private_salt, payment_client_id, payment_client_secret, no_of_branch, branches, user_password, email) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)";
+                    $insert_user_prepare = pg_prepare($this->db,"create_user",$insert_user_query);
+                    $insert_user_execute = pg_execute($this->db,"create_user",array($this->gstNumber,$this->name,$this->address,$this->pincode,$this->industry,$this->state,$this->instamojo,$this->APIKey,$this->authToken,$this->privateSalt,$this->clientId,$this->clientSecret,$this->noOfBranch,$this->branches,$this->password,$this->email));
+                    if($insert_user_execute){
+                        http_response_code(200);
+                        echo "success";
+                    }
+                    else{
+                        http_response_code(400);
+                        echo "Error inserting data";
+                    }
                 }
             }
             else{
@@ -67,6 +78,51 @@
                 echo "API expects POST request.";
             }
             
+        }
+
+        function checkUser(){
+            if($this->checkTable()){
+                $check_user_query = "SELECT * FROM users WHERE gst_number = $1 AND username = $2";
+                $check_user_response = pg_prepare($this->db,"check_user",$check_user_query);
+                $check_user_response = pg_execute($this->db,"check_user",array($this->gstNumber, $this->name));
+                if(pg_num_rows($check_user_response) > 0){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+
+            }
+        }
+
+        function checkTable(){
+            $check_table_query = "SELECT * FROM information_schema.tables WHERE table_name = 'users'";
+            $check_table_data = pg_query($this->db,$check_table_query);
+            if(pg_num_rows($check_table_data) > 0){
+                return true;
+            }
+            else{
+                $create_table_query = "CREATE TABLE users(
+                    gst_number bigint PRIMARY KEY,
+                    username varchar(25),
+                    user_address text,
+                    pincode int,
+                    industry varchar(25),
+                    user_state varchar(25),
+                    payment_instamojo text,
+                    payment_api_key text,
+                    payment_auth_token text,
+                    payment_private_salt text,
+                    payment_client_id text,
+                    payment_client_secret text,
+                    no_of_branch smallint,
+                    branches json,
+                    user_password varchar(50),
+                    email text
+                )";
+                $create_table_result = pg_query($this->db,$create_table_query);
+                $this->checkTable();
+            }
         }
 
 
