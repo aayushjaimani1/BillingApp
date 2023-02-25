@@ -2,11 +2,13 @@
 
     header("Access-Control-Allow-Methods:*");
     header("Access-Control-Allow-Origin:*");
+    header("Access-Control-Allow-Headers:*");
     require_once("../Connection/Database.php");
 
     class SignupProps{
         protected $db;
         protected $httpMethod;
+        protected $signupData;
 
         protected $gstNumber;
         protected $name;
@@ -36,24 +38,25 @@
             $this->httpMethod = $_SERVER['REQUEST_METHOD'];
 
             if($this->httpMethod == "POST"){
-                $this->gstNumber = strip_tags(pg_escape_string($this->db,trim($_POST['gstNumber'])));
-                $this->name = strip_tags(pg_escape_string($this->db,trim($_POST['name'])));
-                $this->address = strip_tags(pg_escape_string($this->db,trim($_POST['address'])));
-                $this->pincode = strip_tags(pg_escape_string($this->db,trim($_POST['pincode'])));
-                $this->industry = strip_tags(pg_escape_string($this->db,trim($_POST['industry'])));
-                $this->state = strip_tags(pg_escape_string($this->db,trim($_POST['state'])));
+                $this->signupData = json_decode($_POST['signup_data']);
+                $this->gstNumber = strip_tags(pg_escape_string($this->db,trim($this->signupData->companyInformation->gstNumber)));
+                $this->name = strip_tags(pg_escape_string($this->db,trim($this->signupData->companyInformation->name)));
+                $this->address = strip_tags(pg_escape_string($this->db,trim($this->signupData->companyInformation->address)));
+                $this->pincode = strip_tags(pg_escape_string($this->db,trim($this->signupData->companyInformation->pincode)));
+                $this->industry = strip_tags(pg_escape_string($this->db,trim($this->signupData->companyInformation->industry)));
+                $this->state = strip_tags(pg_escape_string($this->db,trim($this->signupData->companyInformation->state)));
 
-                $this->instamojo = md5(strip_tags(pg_escape_string($this->db,trim($_POST['instamojo']))));
-                $this->APIKey = md5(strip_tags(pg_escape_string($this->db,trim($_POST['apikey']))));
-                $this->authToken = md5(strip_tags(pg_escape_string($this->db,trim($_POST['authtoken']))));
-                $this->privateSalt = md5(strip_tags(pg_escape_string($this->db,trim($_POST['privatesalt']))));
-                $this->clientId = md5(strip_tags(pg_escape_string($this->db,trim($_POST['clientId']))));
-                $this->clientSecret = md5(strip_tags(pg_escape_string($this->db,trim($_POST['clientsecret']))));
+                $this->instamojo = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->instamojoUsername))));
+                $this->APIKey = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->privateAPIKey))));
+                $this->authToken = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->privateAuthToken))));
+                $this->privateSalt = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->privateSalt))));
+                $this->clientId = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->clientID))));
+                $this->clientSecret = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->ClientSecret))));
                 
-                $this->noOfBranch = strip_tags(pg_escape_string($this->db,trim($_POST['noofbranch'])));
-                $this->branches = strip_tags(pg_escape_string($this->db,trim($_POST['branches'])));
-                $this->password = md5(strip_tags(pg_escape_string($this->db,trim($_POST['password']))));
-                $this->email = strip_tags(pg_escape_string($this->db,trim($_POST['email'])));
+                $this->noOfBranch = strip_tags(pg_escape_string($this->db,trim($this->signupData->branchInformation->noBranch)));
+                $this->branches = strip_tags(pg_escape_string($this->db,json_encode($this->signupData->branchInformation->fields)));
+                $this->password = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->branchInformation->password))));
+                $this->email = strip_tags(pg_escape_string($this->db,trim($this->signupData->branchInformation->email)));
                 
                 if($this->checkUser()){
                     http_response_code(400);
@@ -65,17 +68,17 @@
                     $insert_user_execute = pg_execute($this->db,"create_user",array($this->gstNumber,$this->name,$this->address,$this->pincode,$this->industry,$this->state,$this->instamojo,$this->APIKey,$this->authToken,$this->privateSalt,$this->clientId,$this->clientSecret,$this->noOfBranch,$this->branches,$this->password,$this->email));
                     if($insert_user_execute){
                         http_response_code(200);
-                        echo "success";
+                        echo json_encode("success");
                     }
                     else{
                         http_response_code(400);
-                        echo "Error inserting data";
+                        echo json_encode("Error inserting data");
                     }
                 }
             }
             else{
                 http_response_code(404);
-                echo "API expects POST request.";
+                echo json_encode("API expects POST request.");
             }
             
         }

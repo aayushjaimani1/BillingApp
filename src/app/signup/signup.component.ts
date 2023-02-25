@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,6 +16,9 @@ export class SignupComponent implements OnInit {
   private signupFormNo = 0;
   noOfBranch = 0;
   errorAlert = "d-none";
+  errorMessage = "Some fields are empty, Please fill all the required fields."
+  private ajax: any;
+  private formdata: any;
   progress = [
     {
       text: "text-primary",
@@ -60,7 +63,7 @@ export class SignupComponent implements OnInit {
 
 
   // constructor
-  constructor(private fb: FormBuilder, private http: HttpClient){
+  constructor(private fb: FormBuilder, private user: CommonService){
     
   }
 
@@ -202,8 +205,31 @@ export class SignupComponent implements OnInit {
 
   CreateUser(signup: HTMLFormElement){
     if(this.billingSignupForm.valid){
-      console.log(this.billingSignupForm.value)
-      this.formReset(signup);
+      this.formdata = new FormData();
+      this.formdata.append("signup_data",JSON.stringify(this.billingSignupForm.value));
+      this.ajax = this.user.authSignup(this.formdata);
+      this.ajax.subscribe((response: string) => {
+        if(response.trim() == "success"){
+          alert("success");
+          this.formReset(signup);
+        }
+        else{
+          this.errorAlert = "";
+          this.errorMessage = `${response}.`;
+          setTimeout(()=> {
+            this.errorAlert = "d-none";
+            this.errorMessage = "Some fields are empty, Please fill all the required fields."
+          },5000);
+        }
+      },(error: any) => {
+        this.errorAlert = "";
+          console.log(error);
+          this.errorMessage = `${error}.`;
+          setTimeout(()=> {
+            this.errorAlert = "d-none";
+            this.errorMessage = "Some fields are empty, Please fill all the required fields."
+          },5000);
+      });
     }
     else{
       this.errorAlert = "";
