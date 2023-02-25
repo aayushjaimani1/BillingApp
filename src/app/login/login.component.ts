@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { CommonService } from '../common.service';
 
 @Component({
   selector: 'app-login',
@@ -7,7 +8,11 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  constructor(private fb: FormBuilder){
+
+  private formdata: any;
+  private ajax: any;
+
+  constructor(private fb: FormBuilder, private user: CommonService){
 
   }
 
@@ -26,8 +31,17 @@ export class LoginComponent {
 
   loginUser(login: HTMLFormElement){
     if(this.loginForm.valid){
-      console.log(this.loginForm.value);
-      login.reset();
+      this.formdata = new FormData();
+      for(const [key, value] of Object.entries(this.loginForm.value)){
+        this.formdata.append(key, value);
+      }
+      this.ajax = this.user.authLogin(this.formdata);
+      this.ajax.subscribe((response: string) => {
+        console.log(response);
+      },(error: string)=>{
+        console.log("error");
+      }
+      );
     }
     else{
       alert("Please fill all the required fields.");

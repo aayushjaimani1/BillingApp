@@ -3,14 +3,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
-
-  private ajax:any;
 
   constructor(private http: HttpClient) {
   
@@ -19,6 +16,10 @@ export class CommonService {
   authSignup(data: any): Observable<string>{
     return this.http.post<string>("http://localhost/Projects/Epics%20Project/billing-system/server/Auth/Signup.php", data)
     .pipe(catchError(this.handleError));
+  }
+
+  authLogin(data: any): Observable<string>{
+    return this.http.post<string>("http://localhost/Projects/Epics%20Project/billing-system/server/Auth/Login.php", data)
   }
   
   handleError(error: HttpErrorResponse): Observable<any>{
