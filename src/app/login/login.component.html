@@ -5,6 +5,9 @@
                 <h1 class="fs-1 pb-3">Welcome back</h1>
                 <p class="fs-4 text-light pb-5">Welcome back! Please enter your details.</p>
                 <form [formGroup]="loginForm" action="" class="form-group pt-3" #login (submit)="loginUser(login)">
+                    <div class="alert alert-danger mb-5 fs-4" role="alert" *ngIf="errorMessage != ''">
+                        {{errorMessage}}
+                    </div>
                     <div class="pb-4">
                         <label class="form-label pb-1 text-light">Username</label>
                         <input type="text" class="form-control border-light-sm text-light mb-2" placeholder="@darpanBahadur" formControlName="username"/>

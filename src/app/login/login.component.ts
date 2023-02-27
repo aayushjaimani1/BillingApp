@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CommonService } from '../common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,9 @@ export class LoginComponent {
 
   private formdata: any;
   private ajax: any;
+  public errorMessage = "";
 
-  constructor(private fb: FormBuilder, private user: CommonService){
+  constructor(private fb: FormBuilder, private user: CommonService, private router: Router){
 
   }
 
@@ -37,9 +39,17 @@ export class LoginComponent {
       }
       this.ajax = this.user.authLogin(this.formdata);
       this.ajax.subscribe((response: string) => {
-        console.log(response);
+        if(response.trim() == "success"){
+          this.router.navigate(['/dashboard']);
+        }
+        else{
+          this.errorMessage = response;
+          setTimeout(()=>{
+            this.errorMessage = "";
+          },2000)
+        }
       },(error: string)=>{
-        console.log("error");
+        console.log(error);
       }
       );
     }

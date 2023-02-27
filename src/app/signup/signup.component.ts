@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { CommonService } from '../common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -63,7 +64,7 @@ export class SignupComponent implements OnInit {
 
 
   // constructor
-  constructor(private fb: FormBuilder, private user: CommonService){
+  constructor(private fb: FormBuilder, private user: CommonService, private router: Router){
     
   }
 
@@ -210,7 +211,7 @@ export class SignupComponent implements OnInit {
       this.ajax = this.user.authSignup(this.formdata);
       this.ajax.subscribe((response: string) => {
         if(response.trim() == "success"){
-          alert("success");
+          this.router.navigate(['/login']);
           this.formReset(signup);
         }
         else{
@@ -223,7 +224,6 @@ export class SignupComponent implements OnInit {
         }
       },(error: any) => {
         this.errorAlert = "";
-          console.log(error);
           this.errorMessage = `${error}.`;
           setTimeout(()=> {
             this.errorAlert = "d-none";

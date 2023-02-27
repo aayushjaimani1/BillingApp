@@ -21,23 +21,32 @@
 
             if($this->httpMethod == "POST"){
                 $this->username = strip_tags(pg_escape_string($this->db, trim($_POST['username'])));
-                $this->password = strip_tags(pg_escape_string($this->db, trim($_POST['password'])));
+                $this->password = md5(strip_tags(pg_escape_string($this->db, trim($_POST['password']))));
+                if($this->checkUser()){
+                    echo json_encode("success");
+                }
+                else{
+                    echo json_encode("Username or email is wrong.");
+                }
             }
             else{
                 http_response_code(404);
                 echo json_encode("API expects POST request.");
-                if($this->checkUser()){
-
-                }
-                else{
-
-                }
             }
         }
 
         function checkUser(){
-            
+            $check_user_query = "SELECT * FROM users WHERE username = $1 AND user_password = $2";
+            $check_user_response = pg_prepare($this->db,"check_user",$check_user_query);
+            $check_user_response = pg_execute($this->db,"check_user",array($this->username,$this->password));
+            if(pg_num_rows($check_user_response) > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
     }
+    new Login();
 
 ?>

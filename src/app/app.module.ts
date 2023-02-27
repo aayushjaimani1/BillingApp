@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     SignupComponent,
     HomepageComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    DashboardLayoutComponent
   ],
   imports: [
     BrowserModule,
