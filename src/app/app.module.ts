@@ -12,7 +12,9 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
+import { HomeComponent } from './dashboard/home/home.component';
+import { NavbarComponent } from './dashboard/navbar/navbar.component';
+import { TopbarComponent } from './dashboard/topbar/topbar.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.co
     HomepageComponent,
     LoginComponent,
     DashboardComponent,
-    DashboardLayoutComponent
+    HomeComponent,
+    NavbarComponent,
+    TopbarComponent
   ],
   imports: [
     BrowserModule,

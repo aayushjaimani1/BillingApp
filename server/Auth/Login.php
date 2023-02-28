@@ -4,6 +4,10 @@
     header("Access-Control-Allow-Origin:*");
     header("Access-Control-Allow-Headers:*");
     require_once("../Connection/Database.php");
+    require_once("../Plugins/vendor/autoload.php");
+
+    use Firebase\JWT\JWT;
+    use Firebase\JWT\Key;
 
     class LoginProps{
         protected $db;
@@ -23,7 +27,14 @@
                 $this->username = strip_tags(pg_escape_string($this->db, trim($_POST['username'])));
                 $this->password = md5(strip_tags(pg_escape_string($this->db, trim($_POST['password']))));
                 if($this->checkUser()){
-                    echo json_encode("success");
+                    $key = '123';
+                    $payload = [
+                        'username' => $this->username,
+                        'password' => $this->password,
+                        'exp' => time() + (60 * 60)
+                    ];
+                    $jwt = JWT::encode($payload, $key, 'HS256');
+                    echo json_encode($jwt);
                 }
                 else{
                     echo json_encode("Username or email is wrong.");

@@ -31,7 +31,7 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
-  loginUser(login: HTMLFormElement){
+  loginUser(){
     if(this.loginForm.valid){
       this.formdata = new FormData();
       for(const [key, value] of Object.entries(this.loginForm.value)){
@@ -39,7 +39,8 @@ export class LoginComponent {
       }
       this.ajax = this.user.authLogin(this.formdata);
       this.ajax.subscribe((response: string) => {
-        if(response.trim() == "success"){
+        if(response.trim() != "API expects POST request." || response.trim() != "Username or email is wrong."){
+          sessionStorage.setItem('_a_', response);
           this.router.navigate(['/dashboard']);
         }
         else{

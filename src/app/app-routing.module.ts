@@ -4,8 +4,8 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { HomeComponent } from './dashboard/home/home.component';
 
 const routes: Routes = [
   {
@@ -29,11 +29,11 @@ const routes: Routes = [
  
   {
     path: "dashboard",
-    component: DashboardLayoutComponent,
+    component: DashboardComponent,
     children: [
       {
         path: "",
-        component: DashboardComponent
+        component: HomeComponent
       }
     ]
   }

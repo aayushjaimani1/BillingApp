@@ -4,7 +4,7 @@
             <div>
                 <h1 class="fs-1 pb-3">Welcome back</h1>
                 <p class="fs-4 text-light pb-5">Welcome back! Please enter your details.</p>
-                <form [formGroup]="loginForm" action="" class="form-group pt-3" #login (submit)="loginUser(login)">
+                <form [formGroup]="loginForm" action="" class="form-group pt-3" #login (submit)="loginUser()">
                     <div class="alert alert-danger mb-5 fs-4" role="alert" *ngIf="errorMessage != ''">
                         {{errorMessage}}
                     </div>
