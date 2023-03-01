@@ -1,1 +1,60 @@
-<p>topbar works!</p>
+<header class="header">
+  <div class="container-fluid w-100">
+    <div class="row">
+      <div class="col-lg-5 col-md-5 col-6">
+        <div class="header-left d-flex align-items-center ps-4">
+          <div class="header-search d-none d-md-flex">
+            <form action="#">
+              <input type="text" class="py-3" placeholder="Search..." />
+              <button><i class="lni lni-search-alt"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-7 d-flex justify-content-end">
+        <div class="header-right">
+          <div class="d-flex justify-content-between header-right-icons pe-4">
+            <!-- notification start -->
+            <div class="notification-box ml-15 d-none d-md-flex">
+              <button type="button" id="notification">
+                <i class="lni lni-alarm fs-4"></i>
+                <span>2</span>
+              </button>
+            </div>
+            <!-- notification end -->
+            <!-- message start -->
+            <div class="header-message-box ml-15 d-none d-md-flex">
+              <button type="button" id="message">
+                <i class="lni lni-envelope fs-4"></i>
+                <span>3</span>
+              </button>
+            </div>
+            <!-- message end -->
+            <!-- filter start -->
+            <div class="filter-box ml-15 d-none d-md-flex">
+              <button type="button" id="filter">
+                <i class="lni lni-funnel fs-4"></i>
+              </button>
+            </div>
+            <!-- filter end -->
+          </div>
+          <!-- profile start -->
+          <div class="profile-box ml-15">
+            <button class="bg-transparent border-0">
+              <div class="profile-info">
+                <div class="info">
+                  <h6 class="pe-3">{{username.charAt(0).toUpperCase() + username.slice(1)}}</h6>
+                  <div class="image">
+                    <img src="https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745" alt="" />
+                    <span class="status"></span>
+                  </div>
+                </div>
+              </div>
+            </button>
+          </div>
+          <!-- profile end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

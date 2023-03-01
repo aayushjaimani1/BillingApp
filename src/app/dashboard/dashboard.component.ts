@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { Router } from '@angular/router';
+import { Admin } from './admin';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,18 +10,23 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit{
   private ajax: any;
-  public username: string = "Welcome";
   constructor(private session: DashboardService, private router: Router){
     
   }
   ngOnInit(): void {
-    this.ajax = this.session.checkSession();
-    this.ajax.subscribe((response: any) =>{
-      this.username = response.username;
-    },
-    (error: string) => {
+    if(sessionStorage.getItem('_a_')){
+      this.ajax = this.session.checkSession();
+      this.ajax.subscribe((response: Admin) =>{
+        this.session.username = response.username;
+      },
+      (error: string) => {
+        this.router.navigate(['/login']);
+      }
+      )
+    }
+    else{
       this.router.navigate(['/login']);
     }
-    )
+    
   }
 }
