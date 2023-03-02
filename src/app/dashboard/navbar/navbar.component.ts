@@ -9,5 +9,5 @@ export class NavbarComponent {
   constructor(){
 
   }
-  public isCollapsed = false;
+  public isCollapsed = true;
 }
