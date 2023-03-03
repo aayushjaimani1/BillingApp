@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { HomeComponent } from './dashboard/home/home.component';
+import { AddProductComponent } from './dashboard/add-product/add-product.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
       {
         path: "login",
         component: LoginComponent
-      },
+      }
     ]
   },
  
@@ -34,6 +35,10 @@ const routes: Routes = [
       {
         path: "",
         component: HomeComponent
+      },
+      {
+        path: "add",
+        component: AddProductComponent
       }
     ]
   }

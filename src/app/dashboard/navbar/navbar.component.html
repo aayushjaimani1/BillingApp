@@ -6,15 +6,15 @@
   </div>
   <nav class="sidebar-nav">
     <ul>
-      <li class="nav-item active show pt-5">
-        <a routerLink="dashboard" class="d-flex align-items-center">
+      <li class="nav-item activ {{tab[0]}} show pt-5">
+        <a routerLink="../dashboard" class="d-flex align-items-center" (click)="change([0,0])">
           <span class="icon pe-3 d-flex align-items-center">
             <i class="lni lni-home fs-2"></i>
           </span>
           <span>Home</span>
         </a>
       </li>
-      <li class="nav-item nav-item-has-children">
+      <li class="nav-item {{tab[1]}} nav-item-has-children">
         <a class="d-flex align-items-center" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed">
           <span class="icon pe-3 d-flex align-items-center">
             <i class="lni lni-dropbox-original fs-2"></i>
@@ -23,17 +23,17 @@
         </a>
         <ul #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
           <li ngbDropdownItem>
-            <a class=""> Add Product </a>
+            <a routerLink="add" class="{{inventory[0]}}" (click)="change([1,0])"> Add Product </a>
           </li>
           <li ngbDropdownItem>
-            <a>
+            <a class="{{inventory[1]}}" (click)="change([1,1])">
               <span class="text">
                 Add Stock
               </span>
             </a>
           </li>
           <li ngbDropdownItem>
-            <a>
+            <a class="{{inventory[2]}}" (click)="change([1,2])">
               <span class="text">
                 Add category
               </span>

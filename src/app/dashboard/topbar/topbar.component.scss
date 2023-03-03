@@ -47,8 +47,20 @@ h6{
   display: flex;
   justify-content: flex-end;
 }
+.select-branch{
+  width: 200px;
+  option{
+    padding: 1rem 2rem!important;
+    font-size: 1.6rem;
+  }
+  
+}
+select option:hover{
+  background-color: #7027c4!important;
+}
+
 .header-right-icons{
-    width: 200px;
+    width: 400px;
 }
 .header .header-right button {
   border: 1px solid #efefef;

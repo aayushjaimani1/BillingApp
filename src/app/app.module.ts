@@ -15,6 +15,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './dashboard/home/home.component';
 import { NavbarComponent } from './dashboard/navbar/navbar.component';
 import { TopbarComponent } from './dashboard/topbar/topbar.component';
+import { AddProductComponent } from './dashboard/add-product/add-product.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TopbarComponent } from './dashboard/topbar/topbar.component';
     DashboardComponent,
     HomeComponent,
     NavbarComponent,
-    TopbarComponent
+    TopbarComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,

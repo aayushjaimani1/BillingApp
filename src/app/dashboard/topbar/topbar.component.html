@@ -14,6 +14,9 @@
       <div class="col-7 d-flex justify-content-end">
         <div class="header-right">
           <div class="d-flex justify-content-between header-right-icons pe-4">
+            <select class="form-select form-select-lg select-branch">
+              <option *ngFor="let branch of branches" value="">{{branch.field1}}</option>
+            </select>
             <!-- notification start -->
             <div class="notification-box ml-15 d-none d-md-flex">
               <button type="button" id="notification">

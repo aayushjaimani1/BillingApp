@@ -19,5 +19,11 @@ export class DashboardService {
     return this.http.get<Admin>("http://localhost/Projects/Epics%20Project/billing-system/server/Auth/Verify.php",{headers});
   }
 
+  getBranches(): Observable<Admin>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`);
+    return this.http.get<Admin>("http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/Branch.php",{headers});
+  }
+
 
 }
