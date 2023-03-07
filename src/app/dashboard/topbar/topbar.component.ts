@@ -26,9 +26,8 @@ export class TopbarComponent implements OnInit{
         this.username = response.username;
         this.brachReq = this.session.getBranches();
         this.brachReq.subscribe((response:any)=>{
-          console.log(response);
-          
           this.branches = response;
+          this.session.setbranchName(this.branches[0].field1)
         })
       },
       (error: string) => {
@@ -41,6 +40,9 @@ export class TopbarComponent implements OnInit{
     }
     
   }
-  
+
+  changeBranch(selectBranch: string){
+    this.session.setbranchName(selectBranch)
+  }
    
 }
