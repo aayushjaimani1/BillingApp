@@ -17,6 +17,7 @@
         protected $branch;
         protected $data;
         protected $array = array();
+        protected $noOfRows;
     }
 
     class Product extends ProductProps{
@@ -25,7 +26,7 @@
             $this->db = $this->db->connect();
             $this->branch = str_replace("/[^\p{L}\p{N}\s]/u","",$_GET['branch']);
             $this->branch = str_replace(" ","",$this->branch);
-
+            $this->noOfRows = $_GET['row'];
             $this->getProduct();
         }
 
@@ -49,7 +50,7 @@
                     $check_table_query = "SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = '".$this->branch."_".$this->data[0]."')";
                     $result = pg_query($this->db, $check_table_query);
                     if(pg_fetch_row($result)[0] != 'f'){
-                        $result_query = "SELECT * FROM ".$this->branch."_".$this->data[0];
+                        $result_query = "SELECT * FROM ".$this->branch."_".$this->data[0]." LIMIT 10 OFFSET ".$this->noOfRows;
                         $result =  pg_query($this->db, $result_query);
                         if (pg_num_rows($result) > 0) {
                             while ($row = pg_fetch_assoc($result)) {

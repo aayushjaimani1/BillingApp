@@ -36,10 +36,10 @@ export class DashboardService {
     return this.http.get<Admin>("http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/Branch.php",{headers});
   }
 
-  getProduct(value: string): Observable<string>{
+  getProduct(value: string, row: number): Observable<string>{
     const jwt = sessionStorage.getItem('_a_');
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`);
     value = value.replace(/[^a-zA-Z0-9\s]/g, '')
-    return this.http.get<string>(`http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/GetProduct.php?branch=${value}`,{headers});
+    return this.http.get<string>(`http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/GetProduct.php?branch=${value}&row=${row}`,{headers});
   }
 }
