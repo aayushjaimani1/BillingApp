@@ -13,8 +13,15 @@ import {
 import {
   Product
 } from './product';
-import { NgbModal,ModalDismissReasons, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, Validators } from '@angular/forms';
+import {
+  NgbModal,
+  ModalDismissReasons,
+  NgbDatepickerModule
+} from '@ng-bootstrap/ng-bootstrap';
+import {
+  FormBuilder,
+  Validators
+} from '@angular/forms';
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
@@ -29,15 +36,15 @@ export class AddProductComponent implements OnInit {
   private formdata: any;
   product = this.fb.group({
     name: ['', Validators.required],
-    sku: ['',Validators.required],
-    category: ['',Validators.required],
-    stock: ['',Validators.required],
-    price: ['',Validators.required],
-    image: ['',Validators.required]
+    sku: ['', Validators.required],
+    category: ['', Validators.required],
+    stock: ['', Validators.required],
+    price: ['', Validators.required],
+    image: ['', Validators.required]
   });
 
 
-  constructor(private dService: DashboardService,private modalService: NgbModal, private fb: FormBuilder) {
+  constructor(private dService: DashboardService, private modalService: NgbModal, private fb: FormBuilder) {
 
   }
 
@@ -55,7 +62,7 @@ export class AddProductComponent implements OnInit {
     })
     this.dService.onBranchNameStateChange.subscribe(value => {
       this.currBranch = value
-      this.ajax = this.dService.getProduct(value, this.products.length)
+      this.ajax = this.dService.getProduct(value, 0)
       this.ajax.subscribe((response: any) => {
         if (response != 'No product found') {
           this.products = response
@@ -70,7 +77,7 @@ export class AddProductComponent implements OnInit {
     fromEvent(document, "scroll").subscribe((event) => {
       let pos = document.documentElement.scrollTop + window.innerHeight;
       let max = document.documentElement.scrollHeight - 5;
-      if(pos >= max){
+      if (pos >= max) {
         this.ajax = this.dService.getProduct(this.currBranch, this.products.length)
         this.ajax.subscribe((response: any) => {
           if (response != 'No product found') {
@@ -82,12 +89,14 @@ export class AddProductComponent implements OnInit {
           console.log(error);
         })
       }
-      
+
     })
 
   }
   openModal(content: any) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title'
+    }).result.then(
       (result) => {
         this.closeResult = `Closed with: ${result}`;
       },
@@ -106,15 +115,36 @@ export class AddProductComponent implements OnInit {
     }
   }
 
-  AddProduct(modal: any){
-    if(this.product.valid){
+  AddProduct(modal: any) {
+    if (this.product.valid) {
       this.formdata = new FormData();
-      for(const [key, value] of Object.entries(this.product.value)){
-        this.formdata.append(key,value)
+      for (const [key, value] of Object.entries(this.product.value)) {
+        this.formdata.append(key, value)
       }
-      modal.close()
-    }
-    else{
+      this.formdata.append('branch', this.currBranch.replace(/[^a-zA-Z0-9\s]/g, ''))
+      this.dService.addSingleProduct(this.formdata).subscribe((response: any) => {
+          if (response == "success") {
+            this.ajax = this.dService.getProduct(this.currBranch, 0)
+            this.ajax.subscribe((response: any) => {
+              if (response != 'No product found') {
+                this.products = response
+              } else {
+                this.products = []
+              }
+            }, (error: string) => {
+              console.log(error);
+            })
+            modal.close()
+          } else {
+            alert(response.error);
+          }
+
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      )
+    } else {
       alert("Some fields are empty");
     }
   }
