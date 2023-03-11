@@ -55,7 +55,13 @@
 .px-25 {
   padding: 4rem 25rem;
 }
+p{
+  margin-bottom: 0!important;
+}
 
+.login > *{
+  margin: 0!important;
+}
 .bg-primary {
   background-color: #6824b7 !important;
 }

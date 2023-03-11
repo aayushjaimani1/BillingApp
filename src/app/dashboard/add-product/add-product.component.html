@@ -2,9 +2,14 @@
   <div class="container-fluid ps-2r">
     <div class="title-wrapper pt-30 pb-5">
       <div class="row align-items-center">
-        <div class="col-md-6">
+        <div class="col-6">
           <div class="title mb-30">
             <h2>Add Product</h2>
+          </div>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+          <div class="pt-4">
+            <a class="main-btn primary-btn btn-hover" (click)="openModal(content)">Add Product</a>
           </div>
         </div>
       </div>
@@ -47,10 +52,10 @@
                   </h6>
                 </th>
                 <th>
-                    <h6 class="text-sm text-medium text-end">
-                      Actions <i class="lni lni-arrows-vertical"></i>
-                    </h6>
-                  </th>
+                  <h6 class="text-sm text-medium text-end">
+                    Actions <i class="lni lni-arrows-vertical"></i>
+                  </h6>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -75,10 +80,10 @@
                   <p class="text-sm">{{product.stock}}</p>
                 </td>
                 <td>
-                    <p class="text-sm">{{product.price}}</p>
+                  <p class="text-sm">{{product.price}}</p>
                 </td>
                 <td>
-                    <p class="text-sm">{{product.category}}</p>
+                  <p class="text-sm">{{product.category}}</p>
                 </td>
                 <td>
                   <div class="action justify-content-end">
@@ -109,3 +114,58 @@
   </div>
   <!-- end container -->
 </section>
+<ng-template #content let-modal>
+      <div class="modal-content card-style2">
+        <div class="modal-header px-0 border-0">
+          <h4 class="text-bold">Add Product</h4>
+          <button class="border-0 bg-transparent h1" style="outline: none;" (click)="modal.dismiss('Cross click')">
+            <i class="lni lni-cross-circle"></i>
+          </button>
+        </div>
+        <div class="modal-body px-0">
+          <div class="content">
+            <form action="" [formGroup]="product" (submit)="AddProduct(modal)">
+              <div class="row pb-5">
+              <div class="mb-3 col-12">
+                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Product Name</label>
+                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2"
+                  placeholder="123 VEGETABLE OIL 500ML" formControlName="name"/>
+              </div>
+              <div class="mb-3 col-6">
+                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">SKU</label>
+                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2"
+                  placeholder="12005000602" formControlName="sku"/>
+              </div>
+              <div class="mb-3 col-6">
+                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Category</label>
+                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2"
+                  placeholder="Household" formControlName="category"/>
+              </div>
+              <div class="mb-3 col-6">
+                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Stock</label>
+                <input type="number" class="form-control border-1 border-light-sm fs-4 mb-2"
+                  placeholder="77930" formControlName="stock"/>
+              </div>
+              <div class="mb-3 col-6">
+                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Price</label>
+                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2"
+                  placeholder="$1.20" formControlName="price"/>
+              </div>
+              <div class="mb-3 col-12">
+                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Image</label>
+                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2"
+                  placeholder="http://cloudinary.com/oil.png" formControlName="image"/>
+              </div>
+            </div>
+            <div class="action d-flex flex-wrap justify-content-end">
+              <button class="main-btn primary-btn btn-hover m-1">
+                Add Product
+              </button>
+            </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+</ng-template>

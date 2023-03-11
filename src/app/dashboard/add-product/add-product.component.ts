@@ -13,7 +13,8 @@ import {
 import {
   Product
 } from './product';
-
+import { NgbModal,ModalDismissReasons, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
@@ -24,9 +25,19 @@ export class AddProductComponent implements OnInit {
   private currBranch = ''
   private ajax: any
   products: Product[] = []
+  closeResult = '';
+  private formdata: any;
+  product = this.fb.group({
+    name: ['', Validators.required],
+    sku: ['',Validators.required],
+    category: ['',Validators.required],
+    stock: ['',Validators.required],
+    price: ['',Validators.required],
+    image: ['',Validators.required]
+  });
 
 
-  constructor(private dService: DashboardService) {
+  constructor(private dService: DashboardService,private modalService: NgbModal, private fb: FormBuilder) {
 
   }
 
@@ -73,6 +84,39 @@ export class AddProductComponent implements OnInit {
       }
       
     })
+
+  }
+  openModal(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      },
+    );
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  AddProduct(modal: any){
+    if(this.product.valid){
+      this.formdata = new FormData();
+      for(const [key, value] of Object.entries(this.product.value)){
+        this.formdata.append(key,value)
+      }
+      modal.close()
+    }
+    else{
+      alert("Some fields are empty");
+    }
   }
 
 }

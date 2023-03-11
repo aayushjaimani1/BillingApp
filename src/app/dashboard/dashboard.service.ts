@@ -42,4 +42,11 @@ export class DashboardService {
     value = value.replace(/[^a-zA-Z0-9\s]/g, '')
     return this.http.get<string>(`http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/GetProduct.php?branch=${value}&row=${row}`,{headers});
   }
+
+  addSingleProduct(): Observable<string>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    const branch = this.branch.replace(/[^a-zA-Z0-9\s]/g, '')
+    return this.http.get<string>(`http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/GetProduct.php?branch=${branch}`,{headers});
+  }
 }
