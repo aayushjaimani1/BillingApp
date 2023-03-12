@@ -42,6 +42,10 @@ export class AddProductComponent implements OnInit {
     price: ['', Validators.required],
     image: ['', Validators.required]
   });
+  addstock = this.fb.group({
+    stock_sku: ['', Validators.required],
+    stock_stock: ['', Validators.required]
+  })
 
 
   constructor(private dService: DashboardService, private modalService: NgbModal, private fb: FormBuilder) {
@@ -145,6 +149,54 @@ export class AddProductComponent implements OnInit {
         }
       )
     } else {
+      alert("Some fields are empty");
+    }
+  }
+
+  stockModal(content: any) {
+    this.modalService.open(content, {
+      ariaLabelledBy: 'modal-basic-title'
+    }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      },
+    );
+  }
+
+  AddStock(modal: any){
+    if(this.addstock.valid){
+      this.formdata = new FormData()
+      for(const [key, value] of Object.entries(this.addstock.value)){
+        this.formdata.append(key, value)
+      }
+      this.formdata.append('branch', this.currBranch.replace(/[^a-zA-Z0-9\s]/g, ''))
+      this.dService.addProductStock(this.formdata).subscribe((response: any) => {
+        if(response == "success"){
+          this.ajax = this.dService.getProduct(this.currBranch, 0)
+            this.ajax.subscribe((response: any) => {
+              if (response != 'No product found') {
+                this.products = response
+              } else {
+                this.products = []
+              }
+            }, (error: string) => {
+              console.log(error);
+            })
+            modal.close()
+        }
+        else{
+          alert(response);
+        }
+      },
+      (error:any)=>{
+        console.log(error);
+        
+      })
+    }
+    else{
       alert("Some fields are empty");
     }
   }

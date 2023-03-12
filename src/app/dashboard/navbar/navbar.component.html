@@ -14,7 +14,15 @@
           <span>Home</span>
         </a>
       </li>
-      <li class="nav-item {{tab[1]}} nav-item-has-children">
+      <li class="nav-item activ {{tab[1]}}">
+        <a routerLink="../dashboard/add" class="d-flex align-items-center" (click)="change([1,0])">
+          <span class="icon pe-3 d-flex align-items-center">
+            <i class="lni lni-dropbox-original fs-2"></i>
+          </span>
+          <span>Inventory</span>
+        </a>
+      </li>
+      <!-- <li class="nav-item {{tab[1]}} nav-item-has-children">
         <a class="d-flex align-items-center" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed">
           <span class="icon pe-3 d-flex align-items-center">
             <i class="lni lni-dropbox-original fs-2"></i>
@@ -40,7 +48,7 @@
             </a>
           </li>
         </ul>
-      </li>
+      </li> -->
     </ul>
   </nav>
 

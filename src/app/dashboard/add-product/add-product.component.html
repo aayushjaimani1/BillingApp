@@ -8,7 +8,10 @@
           </div>
         </div>
         <div class="col-6 d-flex justify-content-end">
-          <div class="pt-4">
+          <div class="pe-4">
+            <a class="main-btn primary-btn btn-hover" (click)="stockModal(stockform)">Add Stock</a>
+          </div>
+          <div>
             <a class="main-btn primary-btn btn-hover" (click)="openModal(content)">Add Product</a>
           </div>
         </div>
@@ -51,11 +54,6 @@
                     Categories <i class="lni lni-arrows-vertical"></i>
                   </h6>
                 </th>
-                <th>
-                  <h6 class="text-sm text-medium text-end">
-                    Actions <i class="lni lni-arrows-vertical"></i>
-                  </h6>
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -84,25 +82,6 @@
                 </td>
                 <td>
                   <p class="text-sm">{{product.category}}</p>
-                </td>
-                <td>
-                  <div class="action justify-content-end">
-                    <button class="edit">
-                      <i class="lni lni-pencil"></i>
-                    </button>
-                    <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                      aria-expanded="false">
-                      <i class="lni lni-more-alt"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                      <li class="dropdown-item">
-                        <a href="#0" class="text-gray">Remove</a>
-                      </li>
-                      <li class="dropdown-item">
-                        <a href="#0" class="text-gray">Edit</a>
-                      </li>
-                    </ul>
-                  </div>
                 </td>
               </tr>
             </tbody>
@@ -167,5 +146,41 @@
 
         </div>
       </div>
+
+</ng-template>
+
+<ng-template #stockform let-modal>
+  <div class="modal-content card-style2">
+    <div class="modal-header px-0 border-0">
+      <h4 class="text-bold">Add Stock</h4>
+      <button class="border-0 bg-transparent h1" style="outline: none;" (click)="modal.dismiss()">
+        <i class="lni lni-cross-circle"></i>
+      </button>
+    </div>
+    <div class="modal-body px-0">
+      <div class="content">
+        <form action="" [formGroup]="addstock" (submit)="AddStock(modal)">
+          <div class="row pb-5">
+          <div class="mb-3 col-6">
+            <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">SKU</label>
+            <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2"
+              placeholder="12005000602" formControlName="stock_sku"/>
+          </div>
+          <div class="mb-3 col-6">
+            <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Stock</label>
+            <input type="number" class="form-control border-1 border-light-sm fs-4 mb-2"
+              placeholder="77930" formControlName="stock_stock"/>
+          </div>
+        </div>
+        <div class="action d-flex flex-wrap justify-content-end">
+          <button class="main-btn primary-btn btn-hover m-1">
+            Add Stock
+          </button>
+        </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
 
 </ng-template>

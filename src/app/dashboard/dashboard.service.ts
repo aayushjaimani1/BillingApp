@@ -48,4 +48,9 @@ export class DashboardService {
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
     return this.http.post<string>(`http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/AddProduct.php`, data, {headers});
   }
+  addProductStock(data: any): Observable<string>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<string>(`http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/AddStock.php`, data, {headers});
+  }
 }
