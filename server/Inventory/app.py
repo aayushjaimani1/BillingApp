@@ -180,9 +180,9 @@ def addCoupon():
         cpn.add(decoded)
         if cpn.checkTable():
             if cpn.addCoupon(coupon_id,coupon_percentage,min_amount):
-                return jsonify("Coupon Generated")
+                return jsonify("Coupon Generated.")
             else:
-                return jsonify("Coupon Already Exists")
+                return jsonify("Coupon Already Exists.")
         return jsonify("Error")
         
 
