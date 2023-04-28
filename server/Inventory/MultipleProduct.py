@@ -26,7 +26,7 @@ class AddProduct:
 
     def store(self):
         df = pd.read_excel(r"C:\Users\darpan\Downloads\epic darpan.xlsx")
-        df.to_sql(name='branch1_987654321000000',con=self.engine,if_exists='append',index=False,index_label='sku')
+        df.to_sql(name='groofersindore_987654321786595',con=self.engine,if_exists='replace',index=False,index_label='sku')
 
     def close(self):
         self.cur.close()

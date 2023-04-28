@@ -47,6 +47,10 @@ export class AddProductComponent implements OnInit {
     stock_stock: ['', Validators.required]
   })
 
+  multiupload =  this.fb.group({
+    excelfile: ['']
+  })
+
 
   constructor(private dService: DashboardService, private modalService: NgbModal, private fb: FormBuilder) {
 
@@ -148,6 +152,18 @@ export class AddProductComponent implements OnInit {
           console.log(error);
         }
       )
+    } else {
+      alert("Some fields are empty");
+    }
+  }
+
+  AddMultiProduct(modal: any){
+    if (this.multiupload.valid) {
+      this.formdata = new FormData();
+      this.formdata.append('file', this.multiupload.get('excelfile')?.value);
+      this.dService.addMultipleProduct(this.formdata).subscribe((response: any) => {
+        
+      })
     } else {
       alert("Some fields are empty");
     }
