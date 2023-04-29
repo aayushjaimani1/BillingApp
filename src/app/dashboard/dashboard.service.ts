@@ -27,31 +27,31 @@ export class DashboardService {
     const jwt = sessionStorage.getItem('_a_');
     
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`);
-    return this.http.get<Admin>("http://localhost/Projects/Epics%20Project/billing-system/server/Auth/Verify.php",{headers});
+    return this.http.get<Admin>("http://localhost/Auth/Verify.php",{headers});
   }
 
   getBranches(): Observable<Admin>{
     const jwt = sessionStorage.getItem('_a_');
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`);
-    return this.http.get<Admin>("http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/Branch.php",{headers});
+    return this.http.get<Admin>("http://localhost/Inventory/Branch.php",{headers});
   }
 
   getProduct(value: string, row: number): Observable<string>{
     const jwt = sessionStorage.getItem('_a_');
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`);
     value = value.replace(/[^a-zA-Z0-9\s]/g, '')
-    return this.http.get<string>(`http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/GetProduct.php?branch=${value}&row=${row}`,{headers});
+    return this.http.get<string>(`http://localhost/Inventory/GetProduct.php?branch=${value}&row=${row}`,{headers});
   }
 
   addSingleProduct(data: any): Observable<string>{
     const jwt = sessionStorage.getItem('_a_');
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
-    return this.http.post<string>(`http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/AddProduct.php`, data, {headers});
+    return this.http.post<string>(`http://localhost/Inventory/AddProduct.php`, data, {headers});
   }
   addProductStock(data: any): Observable<string>{
     const jwt = sessionStorage.getItem('_a_');
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
-    return this.http.post<string>(`http://localhost/Projects/Epics%20Project/billing-system/server/Inventory/AddStock.php`, data, {headers});
+    return this.http.post<string>(`http://localhost/Inventory/AddStock.php`, data, {headers});
   }
 
   addMultipleProduct(data: any): Observable<any>{

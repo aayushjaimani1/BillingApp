@@ -14,11 +14,11 @@ export class CommonService {
   }
 
   authSignup(data: any): Observable<string>{
-    return this.http.post<string>("http://localhost/Projects/Epics%20Project/billing-system/server/Auth/Signup.php", data).pipe(catchError(this.handleError));
+    return this.http.post<string>("http://localhost/Auth/Signup.php", data).pipe(catchError(this.handleError));
   }
 
   authLogin(data: any): Observable<string>{
-    return this.http.post<string>("http://localhost/Projects/Epics%20Project/billing-system/server/Auth/Login.php", data).pipe(catchError(this.handleError));
+    return this.http.post<string>("http://localhost/Auth/Login.php", data).pipe(catchError(this.handleError));
   }
   
   handleError(error: HttpErrorResponse): Observable<any>{
