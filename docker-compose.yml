@@ -6,3 +6,11 @@ services:
       - ./server:/var/www/html
     ports:
       - 80:80
+  angular-app:
+    build: 
+      context: ./
+      dockerfile: docker/angular/Dockerfile
+    ports:
+      - "4200:4200"
+    volumes:
+      - ../billing-system/src:/frontend/src
