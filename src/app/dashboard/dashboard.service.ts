@@ -57,6 +57,6 @@ export class DashboardService {
   addMultipleProduct(data: any): Observable<any>{
     const jwt = sessionStorage.getItem('_a_');
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
-    return this.http.post<string>(``, data, {headers});
+    return this.http.post<string>(`http://127.0.0.1:5000/addproduct`, data, {headers});
   }
 }

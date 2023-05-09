@@ -34,6 +34,7 @@ export class AddProductComponent implements OnInit {
   products: Product[] = []
   closeResult = '';
   private formdata: any;
+  private formdata2: any;
   product = this.fb.group({
     name: ['', Validators.required],
     sku: ['', Validators.required],
@@ -48,7 +49,7 @@ export class AddProductComponent implements OnInit {
   })
 
   multiupload =  this.fb.group({
-    excelfile: ['']
+    excelfile: [null]
   })
 
 
@@ -156,14 +157,36 @@ export class AddProductComponent implements OnInit {
       alert("Some fields are empty");
     }
   }
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    
+    const reader = new FileReader();
+    reader.onload = () => {
+      const blob = new Blob([reader.result as ArrayBuffer], { type: file.type });
+      this.formdata2 = new FormData();
+      this.formdata2.append('excel_file', blob, file.name);
+    }
+    reader.readAsArrayBuffer(file);
+  }
 
   AddMultiProduct(modal: any){
     if (this.multiupload.valid) {
-      this.formdata = new FormData();
-      this.formdata.append('file', this.multiupload.get('excelfile')?.value);
-      this.dService.addMultipleProduct(this.formdata).subscribe((response: any) => {
-        
-      })
+        this.formdata2.append('branch', this.currBranch.replace(/[^a-zA-Z0-9\s]/g, ''))
+        this.dService.addMultipleProduct(this.formdata2).subscribe((response)=>{
+          if(response == "Success"){
+            this.ajax = this.dService.getProduct(this.currBranch, 0)
+            this.ajax.subscribe((response: any) => {
+              if (response != 'No product found') {
+                this.products = response
+              } else {
+                this.products = []
+              }
+            }, (error: string) => {
+              console.log(error);
+            })
+            modal.close()
+          }
+        })
     } else {
       alert("Some fields are empty");
     }

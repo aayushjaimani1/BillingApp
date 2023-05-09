@@ -159,13 +159,13 @@
         </form>
         <hr class="py-4">
         <form action="">
-          <div class="row pb-5" [formGroup]="multiupload" >
+          <div class="row pb-5" [formGroup]="multiupload">
             <div class="mb-3 col-12">
               <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Upload Excel File<a class="ps-2" href="https://drive.google.com/file/d/1MtR_FFAFt5DbBInyvEsmb9D5FiE2klkm/view" target="_blank"><span class="material-symbols-outlined" style="font-size: 18px; cursor: pointer;">
                 info
                 </span></a></label>
               <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="form-control border-1 border-light-sm fs-4 mb-2"
-                placeholder="123 VEGETABLE OIL 500ML" formControlName="excelfile"/>
+                placeholder="123 VEGETABLE OIL 500ML" formControlName="excelfile" (change)="onFileSelected($event)"/>
             </div>
           </div>
           <div class="action d-flex flex-wrap justify-content-end">

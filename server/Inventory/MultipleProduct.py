@@ -7,11 +7,7 @@ import pandas as pd
 class AddProduct:
 
     def __init__(self) -> None:
-        if self.connect():
-            self.store()
-            self.close()
-        else:
-            print("something went wrong")
+        pass
 
 
     def connect(self):
@@ -24,12 +20,13 @@ class AddProduct:
         except Exception as e:
             return False
 
-    def store(self):
-        df = pd.read_excel(r"C:\Users\darpan\Downloads\epic darpan.xlsx")
-        df.to_sql(name='groofersindore_987654321786595',con=self.engine,if_exists='replace',index=False,index_label='sku')
+    def store(self, table, df):
+        try:
+            df.to_sql(name=table, con=self.engine,if_exists='replace',index=False,index_label='sku')
+            return True
+        except Exception as e:
+            return False
 
     def close(self):
         self.cur.close()
         self.con.close()
-
-a = AddProduct()
