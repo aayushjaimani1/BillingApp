@@ -35,6 +35,7 @@ export class AddProductComponent implements OnInit {
   closeResult = '';
   private formdata: any;
   private formdata2: any;
+  private formdata3: any;
   product = this.fb.group({
     name: ['', Validators.required],
     sku: ['', Validators.required],
@@ -157,6 +158,29 @@ export class AddProductComponent implements OnInit {
       alert("Some fields are empty");
     }
   }
+
+  delete(sku: string){
+    this.formdata3 = new FormData();
+    this.formdata3.append('delete_sku',sku)
+    this.formdata3.append('branch', this.currBranch.replace(/[^a-zA-Z0-9\s]/g, ''))
+    this.dService.deleteProduct(this.formdata3).subscribe((response) => {
+      if(response == "success"){
+        this.ajax = this.dService.getProduct(this.currBranch, 0)
+        this.ajax.subscribe((response: any) => {
+          if (response != 'No product found') {
+            this.products = response
+          } else {
+            this.products = []
+          }
+        }, (error: string) => {
+          console.log(error);
+        })
+      }
+    },(error)=>{
+      console.log(error);
+    })
+  }
+
   onFileSelected(event: any) {
     const file = event.target.files[0];
     
