@@ -15,6 +15,12 @@ export class NavbarComponent implements OnInit{
     if(this.router.url == "/dashboard/add"){
       this.change([1,0])
     }
+    else if(this.router.url == "/dashboard/invoice"){
+      this.change([2,0])
+    }
+    else if(this.router.url == "/dashboard/consult"){
+      this.change([3,0])
+    }
   }
 
   public isCollapsed = true;

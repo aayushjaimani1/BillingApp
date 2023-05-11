@@ -51,8 +51,11 @@ cs=cosine_similarity(cm)
 #Get the shape of the cosine similarity matrix
 cs.shape
 
-#get the company of the laptop that the user likes 
+#get the company of the laptop that the user likes
+category='Laptop'
 name='HP'
+rating='4'
+max_price = '20000'
 
 #Find the laptop id 
 model_id=df[df.Brand==name]['id'].values[0]
