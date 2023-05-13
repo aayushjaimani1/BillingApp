@@ -1,0 +1,240 @@
+<section class="card-components">
+  <div class="container-fluid ps-2r">
+    <div class="title-wrapper pt-30 pb-5">
+      <div class="row align-items-center">
+        <div class="col-6">
+          <div class="title mb-30">
+            <h2>Generate Invoice</h2>
+          </div>
+        </div>
+      </div>
+      <!-- end row -->
+    </div>
+    <div class="col-lg-12 mb-5">
+      <div class="card-style mb-30">
+        <h6 class="mb-25">Customer Details</h6>
+        <form action="#">
+          <div class="row">
+            <div class="col-6">
+              <div class="input-style-1">
+                <label>First Name</label>
+                <input type="text" class="fs-5" placeholder="Your First Name" />
+              </div>
+            </div>
+            <!-- end col -->
+            <div class="col-6">
+              <div class="input-style-1">
+                <label>Last Name</label>
+                <input type="text" class="fs-5" placeholder="Your Last Name" />
+              </div>
+            </div>
+            <!-- end col -->
+            <div class="col-6">
+              <div class="input-style-1">
+                <label>Address</label>
+                <input type="text" class="fs-5" placeholder="Your Current Address" />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="input-style-1">
+                <label>Email Id</label>
+                <input type="email" class="fs-5" placeholder="Your Email Id" />
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="input-style-1">
+                <label>Phone Number</label>
+                <input type="tel" class="fs-5" placeholder="Your Phone Number" />
+              </div>
+            </div>
+            <!-- end col -->
+          </div>
+          <!-- end row -->
+        </form>
+      </div>
+    </div>
+
+    <div class="col-lg-12 mb-5">
+      <div class="card-style mb-30">
+        <div class="title d-flex flex-wrap align-items-center justify-content-between pb-5">
+          <div class="left d-flex align-items-center">
+            <h6 class="text-medium mb-30">Invoice Number</h6>
+          </div>
+          <div class="right d-flex align-items-center">
+            <button class="main-btn primary-btn btn-hover m-2" type="button" (click)="addField()">Add</button>
+          </div>
+        </div>
+        <!-- End Title -->
+        <div class="table-responsive">
+          <table class="table top-selling-table">
+            <thead>
+              <tr>
+                <th>
+                  <h6 class="text-sm text-medium">Id</h6>
+                </th>
+                <th class="min-width">
+                  <h6 class="text-sm text-medium">
+                    Name <i class="lni lni-arrows-vertical"></i>
+                  </h6>
+                </th>
+                <th class="min-width">
+                  <h6 class="text-sm text-medium">
+                    Price <i class="lni lni-arrows-vertical"></i>
+                  </h6>
+                </th>
+                <th class="min-width">
+                  <h6 class="text-sm text-medium">
+                    Quantity <i class="lni lni-arrows-vertical"></i>
+                  </h6>
+                </th>
+                <th>
+                  <h6 class="text-sm text-medium">
+                    Amount <i class="lni lni-arrows-vertical"></i>
+                  </h6>
+                </th>
+                <th>
+                  <h6 class="text-sm text-medium">
+                    Actions <i class="lni lni-arrows-vertical"></i>
+                  </h6>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of items;let i = index;">
+                <td style="width: 200px;" class="pe-5">
+                  <p class="text-sm item-{{i}}" contenteditable="true" #pro (blur)="getItem(pro.innerHTML)">{{item.id}}</p>
+                </td>
+                <td>
+                  <p class="text-sm item-{{i}}">{{item.name}}</p>
+                </td>
+                <td>
+                  <p class="text-sm item-{{i}}" #pri>{{item.price}}</p>
+                </td>
+                <td style="width: 200px;" class="pe-5">
+                  <p class="text-sm item-{{i}}" contenteditable="true" #qty (blur)="calculateAmount(qty.innerHTML, pri.innerHTML)">{{item.quantity}}</p>
+                </td>
+                <td>
+                  <p class="text-sm item-{{i}}">{{item.amount}}</p>
+                </td>
+                <td>
+                  <div class="action">
+                    <button class="edit">
+                      <i class="lni lni-pencil"></i>
+                    </button>
+                    <button class="delete">
+                      <i class="lni lni-trash-can"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- End Table -->
+
+        </div>
+      </div>
+    </div>
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <div class="card-style mb-30">
+          <div class="title d-flex flex-wrap align-items-center justify-content-between">
+            <div class="left">
+              <h6 class="text-medium mb-30">Apply Coupon</h6>
+            </div>
+          </div>
+          <!-- End Title -->
+
+          <!--Total Amount-->
+          <div>
+            <form action="#">
+              <div class="row">
+                <div class="col-12">
+                  <div class="input-style-1">
+                    <label>Coupon ID</label>
+                    <input type="text" class="fs-4" placeholder="ADFGGF"/>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="col-12">
+              <div class="button-group d-flex justify-content-end flex-wrap">
+                <button class="main-btn primary-btn btn-hover m-2">Apply</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card-style mb-30">
+          <div class="title d-flex flex-wrap align-items-center justify-content-between">
+            <div class="left">
+              <h6 class="text-medium mb-30">Payment Details</h6>
+            </div>
+          </div>
+          <!-- End Title -->
+
+          <!--Total Amount-->
+          <div class="table-responsive">
+            <table class="table top-selling-table mb-5">
+
+              <tbody>
+                <tr>
+                  <td>
+                    <h6 class="text-sm text-medium">Subtotal</h6>
+                  </td>
+                  <td>
+                    <h6 class="text-sm text-bold">57000</h6>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h6 class="text-sm text-medium">Coupon Discount</h6>
+                  </td>
+                  <td>
+                    <h6 class="text-sm text-bold">45%</h6>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h6 class="text-sm text-medium">CGST(9%)</h6>
+                  </td>
+                  <td>
+                    <h6 class="text-sm text-bold">1800</h6>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h6 class="text-sm text-medium">SGST(9%)</h6>
+                  </td>
+                  <td>
+                    <h6 class="text-sm text-bold">1800</h6>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <h6 class="text-sm fs-1">Total Amount Payable</h6>
+                  </td>
+                  <td>
+                    <h6 class="text-sm fs-1">50000</h6>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Payment button -->
+            <div class="col-12">
+              <div class="button-group d-flex justify-content-end flex-wrap">
+                <button class="main-btn primary-btn btn-hover m-2">Pay Now</button>
+                <button class="main-btn danger-btn-outline m-2">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- end container -->
+
+</section>

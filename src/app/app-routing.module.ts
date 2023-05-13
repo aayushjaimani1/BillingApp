@@ -7,6 +7,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { HomeComponent } from './dashboard/home/home.component';
 import { AddProductComponent } from './dashboard/add-product/add-product.component';
+import { InvoiceComponent } from './dashboard/invoice/invoice.component';
+import { ConsultComponent } from './dashboard/consult/consult.component';
+import { CouponComponent } from './dashboard/coupon/coupon.component';
+import { ReportComponent } from './dashboard/report/report.component';
 
 const routes: Routes = [
   {
@@ -39,6 +43,22 @@ const routes: Routes = [
       {
         path: "add",
         component: AddProductComponent
+      },
+      {
+        path: "invoice",
+        component: InvoiceComponent
+      },
+      {
+        path: "consult",
+        component: ConsultComponent
+      },
+      {
+        path: "coupon",
+        component: CouponComponent
+      },
+      {
+        path: "report",
+        component: ReportComponent
       }
     ]
   }

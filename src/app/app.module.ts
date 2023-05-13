@@ -16,6 +16,10 @@ import { HomeComponent } from './dashboard/home/home.component';
 import { NavbarComponent } from './dashboard/navbar/navbar.component';
 import { TopbarComponent } from './dashboard/topbar/topbar.component';
 import { AddProductComponent } from './dashboard/add-product/add-product.component';
+import { InvoiceComponent } from './dashboard/invoice/invoice.component';
+import { ConsultComponent } from './dashboard/consult/consult.component';
+import { CouponComponent } from './dashboard/coupon/coupon.component';
+import { ReportComponent } from './dashboard/report/report.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import { AddProductComponent } from './dashboard/add-product/add-product.compone
     HomeComponent,
     NavbarComponent,
     TopbarComponent,
-    AddProductComponent
+    AddProductComponent,
+    InvoiceComponent,
+    ConsultComponent,
+    CouponComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,

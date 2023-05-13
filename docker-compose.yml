@@ -13,4 +13,4 @@ services:
     ports:
       - "4200:4200"
     volumes:
-      - ../billing-system/src:/frontend/src
+      - ./src:/frontend/src
