@@ -9,10 +9,7 @@
           </div>
           <div class="col-6 d-flex justify-content-end">
             <div class="pe-4">
-              <a class="main-btn primary-btn btn-hover" (click)="stockModal(stockform)">Add Stock</a>
-            </div>
-            <div>
-              <a class="main-btn primary-btn btn-hover" (click)="openModal(content)">Add Product</a>
+              <a class="main-btn primary-btn btn-hover" (click)="stockModal(stockform)">Add Coupon</a>
             </div>
           </div>
         </div>
@@ -32,21 +29,16 @@
                 <tr>
                   <th></th>
                   <th>
-                    <h6 class="text-sm text-medium">Name</h6>
+                    <h6 class="text-sm text-medium">Coupon Code</h6>
                   </th>
                   <th class="min-width">
                     <h6 class="text-sm text-medium">
-                      SKU <i class="lni lni-arrows-vertical"></i>
+                      Coupon Percentage<i class="lni lni-arrows-vertical"></i>
                     </h6>
                   </th>
                   <th class="min-width">
                     <h6 class="text-sm text-medium">
-                      Stock <i class="lni lni-arrows-vertical"></i>
-                    </h6>
-                  </th>
-                  <th class="min-width">
-                    <h6 class="text-sm text-medium">
-                      Price <i class="lni lni-arrows-vertical"></i>
+                      Min Amount<i class="lni lni-arrows-vertical"></i>
                     </h6>
                   </th>
                   <th>
@@ -108,84 +100,12 @@
     </div>
     <!-- end container -->
   </section>
-  <ng-template #content let-modal>
-    <div class="modal-content card-style2">
-      <div class="modal-header px-0 border-0">
-        <h4 class="text-bold">Add Product</h4>
-        <button class="border-0 bg-transparent h1" style="outline: none;" >
-          <i class="lni lni-cross-circle"></i>
-        </button>
-      </div>
-      <div class="modal-body px-0">
-        <div class="content">
-          <form action="" >
-            <div class="row pb-5">
-              <div class="mb-3 col-12">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Product Name</label>
-                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2"
-                  placeholder="123 VEGETABLE OIL 500ML" formControlName="name" />
-              </div>
-              <div class="mb-3 col-6">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">SKU</label>
-                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="12005000602"
-                  formControlName="sku" />
-              </div>
-              <div class="mb-3 col-6">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Category</label>
-                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="Household"
-                  formControlName="category" />
-              </div>
-              <div class="mb-3 col-6">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Stock</label>
-                <input type="number" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="77930"
-                  formControlName="stock" />
-              </div>
-              <div class="mb-3 col-6">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Price</label>
-                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="$1.20"
-                  formControlName="price" />
-              </div>
-              <div class="mb-3 col-12">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Image</label>
-                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2"
-                  placeholder="http://cloudinary.com/oil.png" formControlName="image" />
-              </div>
-            </div>
-            <div class="action d-flex flex-wrap justify-content-end">
-              <button class="main-btn primary-btn btn-hover m-1 mb-5">
-                Add Product
-              </button>
-            </div>
-          </form>
-          <hr class="py-4">
-          <form action="">
-            <div class="row pb-5">
-              <div class="mb-3 col-12">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Upload Excel File<a class="ps-2" href="https://drive.google.com/file/d/1MtR_FFAFt5DbBInyvEsmb9D5FiE2klkm/view" target="_blank"><span class="material-symbols-outlined" style="font-size: 18px; cursor: pointer;">
-                  info
-                  </span></a></label>
-                <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="form-control border-1 border-light-sm fs-4 mb-2"
-                  placeholder="123 VEGETABLE OIL 500ML" formControlName="excelfile"/>
-              </div>
-            </div>
-            <div class="action d-flex flex-wrap justify-content-end">
-              <button type="button" class="main-btn primary-btn btn-hover m-1">
-                Add Multiple Product
-              </button>
-            </div>
-          </form>
-        </div>
-  
-      </div>
-    </div>
-  
-  </ng-template>
   
   <ng-template #stockform let-modal>
     <div class="modal-content card-style2">
       <div class="modal-header px-0 border-0">
-        <h4 class="text-bold">Add Stock</h4>
-        <button class="border-0 bg-transparent h1" style="outline: none;">
+        <h4 class="text-bold">Add Coupon</h4>
+        <button class="border-0 bg-transparent h1" style="outline: none;"(click)="modal.dismiss('Cross click')">
           <i class="lni lni-cross-circle"></i>
         </button>
       </div>
@@ -194,19 +114,24 @@
           <form action="">
             <div class="row pb-5">
               <div class="mb-3 col-6">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">SKU</label>
-                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="12005000602"
+                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Coupon Code</label>
+                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="FGHJJKHG"
                   formControlName="stock_sku" />
               </div>
               <div class="mb-3 col-6">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Stock</label>
-                <input type="number" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="77930"
+                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Coupon Percentage</label>
+                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="10%"
+                  formControlName="stock_stock" />
+              </div>
+              <div class="mb-3 col-6">
+                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Min Amount</label>
+                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="100000"
                   formControlName="stock_stock" />
               </div>
             </div>
             <div class="action d-flex flex-wrap justify-content-end">
               <button class="main-btn primary-btn btn-hover m-1">
-                Add Stock
+                Add Coupon
               </button>
             </div>
           </form>
