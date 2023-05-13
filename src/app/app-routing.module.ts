@@ -9,6 +9,8 @@ import { HomeComponent } from './dashboard/home/home.component';
 import { AddProductComponent } from './dashboard/add-product/add-product.component';
 import { InvoiceComponent } from './dashboard/invoice/invoice.component';
 import { ConsultComponent } from './dashboard/consult/consult.component';
+import { CouponComponent } from './dashboard/coupon/coupon.component';
+import { ReportComponent } from './dashboard/report/report.component';
 
 const routes: Routes = [
   {
@@ -49,6 +51,14 @@ const routes: Routes = [
       {
         path: "consult",
         component: ConsultComponent
+      },
+      {
+        path: "coupon",
+        component: CouponComponent
+      },
+      {
+        path: "report",
+        component: ReportComponent
       }
     ]
   }
