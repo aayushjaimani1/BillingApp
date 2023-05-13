@@ -2,113 +2,122 @@
 from multiprocessing.sharedctypes import Value
 import pandas as pd 
 import numpy as np
+import locale
 from sklearn.metrics.pairwise import cosine_similarity 
 from sklearn.feature_extraction.text import CountVectorizer
 from textblob import TextBlob
 
 #load the data
-path_to_csv_file="C:/xampp/htdocs/Ode2Code2.0/billingsystem/Python/Projecctt.csv"
+path_to_csv_file="C:\\Users\\anok1\\Desktop\\Epics\\billing-system\\server\\Recommend Product\\Projectt.csv"
 #store the data
 df=pd.read_csv(path_to_csv_file)
 #show the first 5 rows of data
 # df.head(5)
 
+
 # df.shape
+def filter_data(df, brand, color=None, battery_life=None, hard_disk_size=None, max_price=None):
+    filtered_data = df[df['Brand'] == brand]  # Filter by brand
 
-#create a list of important columns for the recommandation engine 
-columns = ['Brand','Model','Price in India','id','1 stars','5 stars','link']
+    if color:
+        filtered_data = filtered_data[filtered_data['Colours'] == color]  # Filter by color
 
-#show the data
-df[columns].head(3)
+    if battery_life:
+        filtered_data = filtered_data[filtered_data['Battery_Life'] == battery_life]  # Filter by battery life
 
-#check for any missing value 
-df[columns].isnull().values.any()
+    if hard_disk_size:
+        filtered_data = filtered_data[filtered_data['Hard disk'] == hard_disk_size]  # Filter by hard disk size
 
-#create a function to combine the values of the important columns into a single string 
-def get_important_features(data):
-  important_features=[]
-  for i in range(0,data.shape[0]):
-    important_features.append(data['Brand'][i]+' '+data['Model'][i]+' '+data['link'][i])
+    if max_price:
+        # Convert the price to numeric values and filter by max price
+        filtered_data['Price in India'] = filtered_data['Price in India'].apply(
+            lambda x: float(str(x).replace(",", "")))
+        filtered_data = filtered_data[filtered_data['Price in India'] <= max_price]
+    
 
+    return filtered_data
 
-  return important_features
+# Example usage:
 
-#create a column to hold the combined strings
-df['important_features']=get_important_features(df)
+# brand = 'Acer'
+# color = 'Black'
+# battery_life = 5
+# max_price = 50000
 
-#Show 
-# df.head(3)
-
-#Convert the text to a matrix of token counts
-cm=CountVectorizer().fit_transform(df['important_features'])
-
-#get the cosine similarity matrix from teh count matrix 
-cs=cosine_similarity(cm)
-
-#Print the cosint similartiy matrix
-# print(cs)
-
-#Get the shape of the cosine similarity matrix
-cs.shape
-
-#get the company of the laptop that the user likes 
-name='HP'
-
-#Find the laptop id 
-model_id=df[df.Brand==name]['id'].values[0]
-# print(model_id)
-
-  
-
-#create a list of enumerations for the similarity score
-scores=list(enumerate(cs[model_id]))
-
-#sort the list
-sorted_scores=sorted(scores,key=lambda x:x[1], reverse=True)
-sorted_scores=sorted_scores[1:]
-
-#Print the sorted scores
-# print (sorted_scores)
-
-#create a loop to print the first 5 similar laptops 
-j=0
-print ('The 5 most recommended laptop of company ',name,'are : \n' )
-mydic={}
-for item in sorted_scores:
-    laptop_review=df[df.id==item[0]]['reviewDescription'].values[0]
-    blog1=TextBlob(laptop_review)
-    mydic[item[0]]=blog1.sentiment
-    j=j+1
-    if j>10:
-      # sort_mydic={}
-      # sort_mydic=sorted(mydic.items(),key=lambda x:x[1],reverse=True)
-      # # print(mydic)
-      sorted_values = sorted(mydic.values(),reverse=True) # Sort the values
-      sorted_dict = {}
-
-      for i in sorted_values:
-          for k in mydic.keys():
-              if mydic[k] == i:
-                  sorted_dict[k] = mydic[k]
-                  break
-      # print(sorted_dict)
-      k=0
-      for key,value in sorted_dict.items():
-          laptop_models=df[df.id==key+1]['Model'].values[0]
-          laptop_price=df[df.id==key+1]['Price in India'].values[0]
-          laptop_bestbuylink=laptop_price=df[df.id==key+1]['link'].values[0]
-          laptop_ram=laptop_price=df[df.id==key+1]['RAM'].values[0]
-          laptop_size=laptop_price=df[df.id==key+1]['Size'].values[0]
-          print( k+1,laptop_models,"   ",laptop_price,"   ",laptop_bestbuylink,"    ",laptop_ram,"    ",laptop_size,"\n")
-          k=k+1
-          if k>4:
-            break
-      break
+# filtered_df = filter_data(df, brand=brand, color=color, battery_life=battery_life, max_price=max_price)
+# # print(filtered_df)
 
 
-# print(sort_mydic)
-# print(type(sort_mydic))
-# for i, value in sort_mydic.items():
-#   print(i)
-# for item in sorted_scores:
+def perform_sentiment_analysis(df):
+    sentiment_scores = {}
+    for index, row in df.iterrows():
+        review = row['reviewDescription']
+        sentiment = TextBlob(review).sentiment
+        sentiment_scores[index] = sentiment
+
+    sorted_scores = sorted(sentiment_scores.items(), key=lambda x: x[1].polarity, reverse=True)
+    top_reviews = sorted_scores[:50]  # Get the top 50 reviews with highest sentiment polarity
+
+    recommended_items = []
+    for review in top_reviews:
+        index, sentiment = review
+        laptop_model = df.loc[index, 'Model']
+        laptop_price = df.loc[index, 'Price in India']
+        laptop_colour = df.loc[index, 'Colours']
+        laptop_bestbuylink = df.loc[index, 'link']
+        laptop_ram = df.loc[index, 'RAM']
+        laptop_size = df.loc[index, 'Size']
+
+        recommended_items.append((laptop_model, laptop_price, laptop_colour, laptop_bestbuylink, laptop_ram, laptop_size))
+
+    return recommended_items
+
+# sent = perform_sentiment_analysis(filtered_df)
+# # print(sent)
+
+
+def perform_collaborative_filtering(df):
+    # Create the ratings matrix
+    ratings_matrix = df[['1 stars', '2 stars', '3 stars', '4 stars', '5 stars']].values
+
+    # Calculate the item similarity matrix
+    item_similarity = cosine_similarity(ratings_matrix.T)
+
+    # Get the target ratings
+    target_ratings = ratings_matrix.mean(axis=0)
+
+    # Perform collaborative filtering
+    weighted_ratings = np.dot(item_similarity.T, target_ratings) / np.sum(item_similarity, axis=1)
+    
+    # Get the indices of the recommended items
+    sorted_indices = np.argsort(weighted_ratings)[::-1]
+
+    return sorted_indices
+
+
+def recommend_laptops(brand, color=None, battery_life=None, hard_disk_size=None, max_price=None):
+    filtered_df = filter_data(df, brand=brand, color=color, battery_life=battery_life, max_price=max_price)
+    
+    collaborative_indices = perform_collaborative_filtering(filtered_df)
+    recommended_laptops = pd.DataFrame(columns=['Model', 'Price', 'Colour', 'Best Buy Link', 'RAM', 'Size'])    
+    
+    for i, item_id in enumerate(collaborative_indices):
+        laptop_model = filtered_df.iloc[item_id]['Model']
+        laptop_price = filtered_df.iloc[item_id]['Price in India']
+        laptop_colour = filtered_df.iloc[item_id]['Colours']
+        laptop_bestbuylink = filtered_df.iloc[item_id]['link']
+        laptop_ram = filtered_df.iloc[item_id]['RAM']
+        laptop_size = filtered_df.iloc[item_id]['Size']
+
+        # Add the laptop information to the DataFrame
+        recommended_laptops.loc[i] = [laptop_model, laptop_price, laptop_colour, laptop_bestbuylink, laptop_ram, laptop_size]
+    
+    # Print the DataFrame
+    print("\nCollaborative Filtering Recommendations:")
+    print(recommended_laptops)
+
+recommend_laptops(brand='HP', color='Black', battery_life=5, max_price=50000)
+
+
+
 
