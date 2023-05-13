@@ -56,11 +56,16 @@ export class InvoiceComponent {
     data.append("branch", branch)
     this.dbService.getItemForInvoice(data).subscribe((response)=>{
       
-      let itm = "item-"+ (this.items.length - 1);
-      let add_item = document.getElementsByClassName(itm);
-      add_item[1].innerHTML = response[0]['name']
-      add_item[2].innerHTML = response[0]['amt'].replace("$","")
-      add_item[4].innerHTML = response[0]['amt'].replace("$","")
+      if(response == "error"){
+        alert("Wrong Product Id or Product Out Of Stock")
+      }
+      else{
+        let itm = "item-"+ (this.items.length - 1);
+        let add_item = document.getElementsByClassName(itm);
+        add_item[1].innerHTML = response[0]['name']
+        add_item[2].innerHTML = response[0]['amt'].replace("$","")
+        add_item[4].innerHTML = response[0]['amt'].replace("$","")
+      }
     })
   }
 

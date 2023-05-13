@@ -106,7 +106,7 @@
                   <p class="text-sm item-{{i}}" #pri>{{item.price}}</p>
                 </td>
                 <td style="width: 200px;" class="pe-5">
-                  <p class="text-sm item-{{i}}" contenteditable="true" #qty (input)="calculateAmount(qty.innerHTML, pri.innerHTML)">{{item.quantity}}</p>
+                  <p class="text-sm item-{{i}}" contenteditable="true" #qty (blur)="calculateAmount(qty.innerHTML, pri.innerHTML)">{{item.quantity}}</p>
                 </td>
                 <td>
                   <p class="text-sm item-{{i}}">{{item.amount}}</p>

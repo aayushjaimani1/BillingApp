@@ -12,9 +12,12 @@ class Item:
         self.cur = self.con.cursor()
     
     def getProduct(self, query):
-        self.cur.execute(query)
-        rows = self.cur.fetchall()
-        self.cur.close()
-        self.con.close()
-        data = [{'id': row[1], 'name': row[0], 'amt': row[3]} for row in rows]
-        return data
+        try:
+            self.cur.execute(query)
+            rows = self.cur.fetchall()
+            self.cur.close()
+            self.con.close()
+            data = [{'id': row[1], 'name': row[0], 'amt': row[3]} for row in rows]
+            return data
+        except Exception as e:
+            return "error"

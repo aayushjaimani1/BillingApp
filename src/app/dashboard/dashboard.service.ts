@@ -71,4 +71,6 @@ export class DashboardService {
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
     return this.http.post<any>(`http://127.0.0.1:5000/item`, data, {headers})
   }
+
+  
 }
