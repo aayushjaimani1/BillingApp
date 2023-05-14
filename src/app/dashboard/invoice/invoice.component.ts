@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Item } from './item';
 import { DashboardService } from '../dashboard.service';
+import { count } from 'rxjs';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-invoice',
@@ -9,72 +11,91 @@ import { DashboardService } from '../dashboard.service';
 })
 export class InvoiceComponent {
   items: Item[]= [];
+  subtotal= 0;
+  coupon_discount = 0;
+  cgst = 0;
+  sgst = 0;
+  grand_total = 0;
+  addItem = this.fb.group({
+    product_id: [''],
+    product_qty: [1]
+  })
 
-  constructor(private dbService: DashboardService){
+  constructor(private dbService: DashboardService, private fb: FormBuilder){
 
   }
 
-  addField(){
-    if(this.items.length == 0){
-      this.items.push({
-        id: "Enter Id",
-        name: "",
-        price: 0,
-        quantity: 1,
-        amount: 0
-      })
-    }
-    else{
-      let itm = "item-"+ (this.items.length - 1);
-      let add_item = document.getElementsByClassName(itm);
-      this.items.pop();
-      this.items.push({
-        id: add_item[0].innerHTML,
-        name: add_item[1].innerHTML,
-        price: Number(add_item[2].innerHTML),
-        quantity: Number(add_item[3].innerHTML),
-        amount: Number(add_item[4].innerHTML)
-      });
-      this.items.push({
-        id: "123",
-        name: "123",
-        price: 123,
-        quantity: 1,
-        amount: 123
-      })
-      console.log(this.items)
-    }
-
-    
+  addField(name:any, price: any, amt: any, additemform: any){
+    this.items.push({
+      id: String(this.addItem.get('product_id')?.value),
+      name: name.innerHTML,
+      price: Number(price.innerHTML.replace("$","")),
+      quantity: Number(String(this.addItem.get('product_qty')?.value)),
+      amount: Number(amt.innerHTML.replace("$",""))
+    });
+    additemform.reset()
+    name.innerHTML = "Product Name"
+    price.innerHTML = "Product Price"
+    amt.innerHTML = "Product Amount"
+    this.calculate()
   }
-  getItem(ele: string){
+
+  getItem(name: any, price: any, amt: any){
     let data = new FormData();
-    data.append("id",ele)
+    data.append("id",String(this.addItem.get('product_id')?.value))
     let branch = this.dbService.branch.replace(/[^a-zA-Z0-9\s]/g, '')
     console.log(branch);
     
     data.append("branch", branch)
     this.dbService.getItemForInvoice(data).subscribe((response)=>{
-      
       if(response == "error"){
         alert("Wrong Product Id or Product Out Of Stock")
       }
       else{
-        let itm = "item-"+ (this.items.length - 1);
-        let add_item = document.getElementsByClassName(itm);
-        add_item[1].innerHTML = response[0]['name']
-        add_item[2].innerHTML = response[0]['amt'].replace("$","")
-        add_item[4].innerHTML = response[0]['amt'].replace("$","")
+        name.innerHTML = response[0].name
+        amt.innerHTML = response[0].amt
+        price.innerHTML = response[0].amt
       }
     })
   }
 
-  calculateAmount(qty: string, pri: string){
-    let amt = Number(qty) * Number(pri.replace("$",""))
-    console.log(amt);
-    let itm = "item-"+ (this.items.length - 1);
-    let add_item = document.getElementsByClassName(itm);
-    add_item[4].innerHTML = amt.toFixed(2) + ""
+  calculateAmount(pri: string, amts: any){
+    let data = new FormData();
+    data.append("id",String(this.addItem.get('product_id')?.value))
+    let branch = this.dbService.branch.replace(/[^a-zA-Z0-9\s]/g, '')
+    data.append("branch",branch)
+    data.append("qty",String(this.addItem.get('product_qty')?.value))
+    this.dbService.checkStock(data).subscribe((response)=>{
+      if(response >= Number(this.addItem.get('product_qty')?.value)){
+        let amt = Number(this.addItem.get('product_qty')?.value) * Number(pri.replace("$",""))
+        amts.innerHTML = "$" + amt.toFixed(2) + ""
+      }
+      else{
+        alert("Out Of Stock")
+      }
+    })
+  }
+
+  deleteItem(sku: string){
+    let count = 0
+    for(let i of this.items){
+      if(i.id == sku){
+        this.items.splice(count,1)
+      }
+      count++
+    }
+    this.calculate()
+  }
+
+  calculate(){
+    let amt = 0
+    for(let item of this.items){
+      amt += item.amount
+    }
+    this.subtotal = amt;
+    this.cgst = Number((0.09 * this.subtotal).toFixed(2));
+    this.sgst = Number((0.09 * this.subtotal).toFixed(2));
+    this.grand_total = Number(((this.subtotal - this.coupon_discount) + this.cgst + this.sgst).toFixed(2))
     
   }
 }

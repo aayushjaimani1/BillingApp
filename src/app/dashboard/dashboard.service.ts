@@ -72,5 +72,9 @@ export class DashboardService {
     return this.http.post<any>(`http://127.0.0.1:5000/item`, data, {headers})
   }
 
-  
+  checkStock(data:any): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/checkStock`, data, {headers})
+  }
 }
