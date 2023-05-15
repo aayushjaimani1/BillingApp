@@ -121,3 +121,14 @@ filtered_dataset = future_df[(future_df.index >= start_date) & (future_df.index 
 
 filtered_dataset[['Sales', 'forecast']].plot(figsize=(12, 8))
 
+
+
+mae = np.mean(np.abs(filtered_dataset['Sales'] - filtered_dataset['forecast']))
+print(mae)
+
+mse = np.mean((filtered_dataset['Sales']  - filtered_dataset['forecast']) ** 2)
+rmse = np.sqrt(mse)
+mape = np.mean(np.abs((filtered_dataset['Sales']  - filtered_dataset['forecast']) / filtered_dataset['forecast'])) * 100
+
+print(mape)
+
