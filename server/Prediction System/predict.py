@@ -72,7 +72,7 @@ plt.show()
 import statsmodels.api as sm
 model = sm.tsa.ARIMA(df['Sales'], order=(1, 1, 1))
 model_fit = model.fit()
-print(model_fit.summary())
+# print(model_fit.summary())
 
 
 df['forecast']=model_fit.predict(start=42,end=103,dynamic=True)
@@ -92,3 +92,21 @@ end_date = pd.to_datetime('2023-12-31')
 
 filtered_dataset = df[(df.index >= start_date) & (df.index <= end_date)]
 # print(filtered_dataset)
+
+filtered_dataset[['Sales','forecast']].plot(figsize=(12,8))
+
+
+from pandas.tseries.offsets import DateOffset
+future_dates=[df.index[-1]+ DateOffset(months=x)for x in range(0,24)]
+future_datest_df=pd.DataFrame(index=future_dates[1:],columns=df.columns)
+future_datest_df.tail()
+future_df=pd.concat([df,future_datest_df])
+
+
+
+future_df['forecast'] = results.predict(start = 47, end = 120, dynamic= True)
+future_df[['Sales', 'forecast']].plot(figsize=(12, 8))
+
+# print(future_df)
+
+
