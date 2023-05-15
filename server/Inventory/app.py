@@ -3,6 +3,7 @@ from flask_cors import CORS
 import pandas as pd
 import jwt
 import psycopg2 as postgre
+import recommendProduct
 import MultipleProduct
 import item
 import checkstock
@@ -134,6 +135,27 @@ def checkStock():
         cs.connect()
         result = cs.getStock(query)
         return jsonify(result)
+    else:
+        return jsonify('Missing or invalid Authorization header.'), 401
+    
+@app.route('/recommend', methods=['POST'])
+def recommend():
+    auth_header = request.headers.get('Authorization')
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        decoded = {}
+        try:
+            decoded = jwt.decode(token, "123", algorithms=["HS256"])
+        except Exception as e:
+            return jsonify('Invalid or expired token.'), 401
+        
+        brand = request.form['brand']
+        color = request.form['color']
+        battery_life = request.form['battery_life']
+        max_price = request.form['max_price']
+        rc = recommendProduct.LaptopRecommendationSystem("https://raw.githubusercontent.com/SkullCreek/BillingApp/main/server/Recommend%20Product/Projectt.csv")
+        result = rc.recommend_laptops(brand,color,int(battery_life),int(max_price))
+        return jsonify(result.to_dict())
     else:
         return jsonify('Missing or invalid Authorization header.'), 401
 

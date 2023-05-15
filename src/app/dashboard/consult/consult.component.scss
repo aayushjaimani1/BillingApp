@@ -256,3 +256,193 @@ h6 {
   .input-style-1 textarea.light-bg[type=time]:focus {
     background: #fff;
   }
+
+  .table {
+    border-collapse: inherit;
+    border-spacing: 0px;
+  }
+  
+  .table> :not(caption)>*>* {
+    padding: 15px 0;
+    border-bottom-color: #efefef;
+    vertical-align: middle;
+  }
+  
+  .table> :not(:last-child)> :last-child>* {
+    border-bottom-color: #efefef;
+  }
+  
+  .table tbody tr:first-child>* {
+    padding-top: 20px;
+  }
+  
+  .table tbody tr:last-child>* {
+    border-bottom-color: transparent;
+    padding-bottom: 0px;
+  }
+  
+  .table th h6 {
+    font-weight: 500;
+    color: #262d3f;
+    font-size: 14px;
+  }
+  
+  .table td.min-width {
+    padding: 5px;
+  }
+  
+  .table td p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #5d657b;
+  }
+  
+  .table td p a {
+    color: inherit;
+  }
+  
+  .table td p a:hover {
+    color: #4a6cf7;
+  }
+  
+  .table .lead-info {
+    min-width: 200px;
+  }
+  
+  .table .lead-email {
+    min-width: 150px;
+    white-space: nowrap;
+  }
+  
+  .table .lead-phone {
+    min-width: 160px;
+  }
+  
+  .table .lead-company {
+    min-width: 180px;
+  }
+  
+  .table .referrals-image {
+    min-width: 150px;
+  }
+  
+  .table .referrals-image .image {
+    width: 55px;
+    max-width: 100%;
+    height: 55px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .table .referrals-image .image img {
+    width: 100%;
+  }
+  
+  .table .lead {
+    display: flex;
+    align-items: center;
+  }
+  
+  .table .lead .lead-image {
+    max-width: 50px;
+    width: 100%;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px !important;
+  }
+  
+  .table .lead .lead-image img {
+    width: 100%;
+  }
+  
+  .table .lead .lead-text {
+    width: 100%;
+  }
+  
+  .table .employee-image {
+    width: 50px;
+    max-width: 100%;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 15px !important;
+  }
+  
+  .table .employee-image img {
+    width: 100%;
+  }
+  
+  .table .action {
+    display: flex;
+    align-items: center;
+  }
+  
+  .table .action button {
+    border: none;
+    background: transparent;
+    padding: 0px 6px;
+    font-size: 18px;
+  }
+  
+  .table .action button.edit:hover {
+    color: #4a6cf7;
+  }
+  
+  .table .action button::after {
+    display: none;
+  }
+  
+  .table .action .dropdown-menu {
+    -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.07);
+    -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.07);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.07);
+  }
+  
+  .table .action .dropdown-menu li:hover a {
+    color: #4a6cf7 !important;
+  }
+  
+  .table .action .dropdown-menu li a {
+    display: block;
+  }
+  
+  .top-selling-table tr th,
+  .top-selling-table tr td {
+    vertical-align: middle;
+    padding: 10px 5px;
+  }
+  
+  .top-selling-table tr .min-width {
+    min-width: 80px;
+    white-space: nowrap;
+  }
+  
+  .top-selling-table .form-check-input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    margin-left: 5px !important;
+  }
+  
+  .top-selling-table .product {
+    display: flex;
+    align-items: center;
+    min-width: 150px;
+  }
+  
+  .top-selling-table .product .image {
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 15px !important;
+    max-width: 50px;
+    width: 100%;
+    height: 50px;
+  }
+  
+  .top-selling-table .product .image img {
+    width: 100%;
+  }
+  
+  .top-selling-table .product p {
+    width: 100%;
+  }
