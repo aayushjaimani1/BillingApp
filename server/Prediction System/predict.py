@@ -73,3 +73,22 @@ import statsmodels.api as sm
 model = sm.tsa.ARIMA(df['Sales'], order=(1, 1, 1))
 model_fit = model.fit()
 print(model_fit.summary())
+
+
+df['forecast']=model_fit.predict(start=42,end=103,dynamic=True)
+df[['Sales','forecast']].plot(figsize=(12,8))
+
+import statsmodels.api as sm
+model=sm.tsa.statespace.SARIMAX(df['Sales'],order=(1, 1, 1),seasonal_order=(1,1,1,12))
+results=model.fit()
+df['forecast']=results.predict(start=35,end=103,dynamic=True)
+df[['Sales','forecast']].plot(figsize=(12,8))
+
+# print(df)
+
+
+start_date = pd.to_datetime('2022-01-01')
+end_date = pd.to_datetime('2023-12-31')
+
+filtered_dataset = df[(df.index >= start_date) & (df.index <= end_date)]
+# print(filtered_dataset)
