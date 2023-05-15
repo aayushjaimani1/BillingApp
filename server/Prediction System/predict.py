@@ -26,3 +26,50 @@ df.describe()
 df.set_index('Month',inplace=True)
 # print(df)
 
+from pylab import rcParams
+rcParams['figure.figsize'] = 15, 7
+df.plot()
+
+from statsmodels.tsa.stattools import adfuller
+test_result=adfuller(df['Sales'])
+
+
+def adfuller_test(sales):
+    result = adfuller(sales)
+    labels = ['ADF Test Statistic', 'p-value', '#Lags Used', 'Number of Observations']
+    for value, label in zip(result, labels):
+        print(label + ' : ' + str(value))
+
+    if result[1] <= 0.05:
+        print("Strong evidence against the null hypothesis (Ho), reject the null hypothesis. Data is stationary.")
+    else:
+        print("Weak evidence against the null hypothesis, indicating it is non-stationary.")
+
+adfuller_test(df['Sales'])
+
+
+from pandas.plotting import autocorrelation_plot
+autocorrelation_plot(df['Sales'])
+plt.show()
+
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+import matplotlib.pyplot as plt
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
+
+# Autocorrelation plot
+plot_acf(df['Sales'], lags=11, ax=ax1)
+ax1.set_title('Autocorrelation')
+
+# Partial autocorrelation plot
+plot_pacf(df['Sales'], lags=11, ax=ax2)
+ax2.set_title('Partial Autocorrelation')
+
+plt.tight_layout()
+plt.show()
+
+
+import statsmodels.api as sm
+model = sm.tsa.ARIMA(df['Sales'], order=(1, 1, 1))
+model_fit = model.fit()
+print(model_fit.summary())
