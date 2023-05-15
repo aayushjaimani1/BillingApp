@@ -110,3 +110,14 @@ future_df[['Sales', 'forecast']].plot(figsize=(12, 8))
 # print(future_df)
 
 
+# Define the start and end dates for filtering
+start_date = pd.to_datetime('2022-01-01')
+end_date = pd.to_datetime('2023-12-31')
+
+# Filter the dataset based on the date range
+filtered_dataset = future_df[(future_df.index >= start_date) & (future_df.index <= end_date)]
+
+# print(filtered_dataset)
+
+filtered_dataset[['Sales', 'forecast']].plot(figsize=(12, 8))
+
