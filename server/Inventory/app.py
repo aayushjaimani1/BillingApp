@@ -5,6 +5,7 @@ import jwt
 import psycopg2 as postgre
 import MultipleProduct
 import item
+import checkstock
 
 app = Flask(__name__)
 CORS(app)
@@ -104,6 +105,34 @@ def getItem():
         i = item.Item()
         i.connect()
         result = i.getProduct(query)
+        return jsonify(result)
+    else:
+        return jsonify('Missing or invalid Authorization header.'), 401
+    
+@app.route('/checkStock', methods=['POST'])
+def checkStock():
+    auth_header = request.headers.get('Authorization')
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        decoded = {}
+        try:
+            decoded = jwt.decode(token, "123", algorithms=["HS256"])
+        except Exception as e:
+            return jsonify('Invalid or expired token.'), 401
+        
+        id = request.form['id']
+        qty = request.form['qty']
+        con = postgre.connect(database="iftqwlwu",user="iftqwlwu",host="satao.db.elephantsql.com",port="5432",password="sKxhxsNLIblOuhLGBPEiy7O4iXhF1nsP")
+        cur = con.cursor()
+        cur.execute("SELECT gst_number FROM users WHERE username = %s AND user_password = %s",(decoded['username'], decoded['password']))
+        rows = cur.fetchone()
+        table = str(request.form['branch']) + "_" + str(rows[0])
+        query = "SELECT stock FROM "+ table +" WHERE sku = " + id
+        cur.close()
+        con.close()
+        cs = checkstock.Stock()
+        cs.connect()
+        result = cs.getStock(query)
         return jsonify(result)
     else:
         return jsonify('Missing or invalid Authorization header.'), 401

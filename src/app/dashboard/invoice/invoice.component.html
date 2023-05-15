@@ -60,10 +60,35 @@
           <div class="left d-flex align-items-center">
             <h6 class="text-medium mb-30">Invoice Number</h6>
           </div>
-          <div class="right d-flex align-items-center">
-            <button class="main-btn primary-btn btn-hover m-2" type="button" (click)="addField()">Add</button>
-          </div>
         </div>
+        <form action="" [formGroup]="addItem" #additemform>
+          <div class="row d-flex justify-content-between">
+            <div class="col-2">
+              <div class="input-style-1">
+                <input type="text" class="fs-5" formControlName="product_id" (change)="getItem(name,price,amt)" placeholder="Product Id" />
+              </div>
+            </div>
+            <div class="col-2">
+              <p class="text-sm item" #name>Product Name</p>
+            </div>
+            <div class="col-2">
+              <p class="text-sm item" #price>Product Price</p>
+            </div>
+            <div class="col-2">
+              <div class="input-style-1">
+                <input type="number" class="fs-5" formControlName="product_qty" (change)="calculateAmount(price.innerHTML,amt)" placeholder="Qty"/>
+              </div>
+            </div>
+            <div class="col-2">
+              <p class="text-sm item" #amt>Product Amount</p>
+            </div>
+            <div class="col-2">
+              <div class="right d-flex align-items-center">
+                <button class="main-btn primary-btn btn-hover m-2" type="button" (click)="addField(name, price, amt, additemform)">Add</button>
+              </div>
+            </div>
+          </div>
+        </form>
         <!-- End Title -->
         <div class="table-responsive">
           <table class="table top-selling-table">
@@ -100,29 +125,27 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of items;let i = index;">
+              
+              <tr *ngFor="let item of items">
                 <td style="width: 200px;" class="pe-5">
-                  <p class="text-sm item-{{i}}" contenteditable="true" #pro (blur)="getItem(pro.innerHTML)">{{item.id}}</p>
+                  <p class="text-sm item" #sku contenteditable="true">{{item.id}}</p>
                 </td>
                 <td>
-                  <p class="text-sm item-{{i}}">{{item.name}}</p>
+                  <p class="text-sm item">{{item.name}}</p>
                 </td>
                 <td>
-                  <p class="text-sm item-{{i}}" #pri>{{item.price}}</p>
+                  <p class="text-sm item" #pri>{{item.price}}</p>
                 </td>
                 <td style="width: 200px;" class="pe-5">
-                  <p class="text-sm item-{{i}}" contenteditable="true" #qty (blur)="calculateAmount(qty.innerHTML, pri.innerHTML)">{{item.quantity}}</p>
+                  <p class="text-sm item" contenteditable="true">{{item.quantity}}</p>
                 </td>
                 <td>
-                  <p class="text-sm item-{{i}}">{{item.amount}}</p>
+                  <p class="text-sm item" #amt>{{item.amount}}</p>
                 </td>
                 <td>
                   <div class="action">
-                    <button class="edit">
-                      <i class="lni lni-pencil"></i>
-                    </button>
                     <button class="delete">
-                      <i class="lni lni-trash-can"></i>
+                      <i class="lni lni-trash-can" (click)="deleteItem(sku.innerHTML)"></i>
                     </button>
                   </div>
                 </td>
@@ -184,7 +207,7 @@
                     <h6 class="text-sm text-medium">Subtotal</h6>
                   </td>
                   <td>
-                    <h6 class="text-sm text-bold">57000</h6>
+                    <h6 class="text-sm text-bold">{{subtotal}}</h6>
                   </td>
                 </tr>
                 <tr>
@@ -192,7 +215,7 @@
                     <h6 class="text-sm text-medium">Coupon Discount</h6>
                   </td>
                   <td>
-                    <h6 class="text-sm text-bold">45%</h6>
+                    <h6 class="text-sm text-bold">{{coupon_discount}}</h6>
                   </td>
                 </tr>
                 <tr>
@@ -200,7 +223,7 @@
                     <h6 class="text-sm text-medium">CGST(9%)</h6>
                   </td>
                   <td>
-                    <h6 class="text-sm text-bold">1800</h6>
+                    <h6 class="text-sm text-bold">{{cgst}}</h6>
                   </td>
                 </tr>
                 <tr>
@@ -208,7 +231,7 @@
                     <h6 class="text-sm text-medium">SGST(9%)</h6>
                   </td>
                   <td>
-                    <h6 class="text-sm text-bold">1800</h6>
+                    <h6 class="text-sm text-bold">{{sgst}}</h6>
                   </td>
                 </tr>
                 <tr>
@@ -216,7 +239,7 @@
                     <h6 class="text-sm fs-1">Total Amount Payable</h6>
                   </td>
                   <td>
-                    <h6 class="text-sm fs-1">50000</h6>
+                    <h6 class="text-sm fs-1">{{grand_total}}</h6>
                   </td>
                 </tr>
               </tbody>
