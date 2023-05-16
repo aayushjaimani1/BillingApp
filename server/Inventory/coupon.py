@@ -30,7 +30,8 @@ class Coupon:
             self.checkTable()
     def addCoupon(self, coupon_id, percentage, min_value):
         try:
-            self.cur.execute("INSERT INTO "+ self.table + "(coupon_id, percentage, min_amount) VALUES("+ coupon_id +", "+ percentage +", "+ min_value +" )")
+            query = "INSERT INTO "+ self.table + "(coupon_id, percentage, min_amount) VALUES('"+ coupon_id +"', "+ percentage +", "+ min_value +" )"
+            self.cur.execute(query)
             self.con.commit()
             return True
         except Exception as e:

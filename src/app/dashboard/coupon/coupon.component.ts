@@ -24,6 +24,11 @@ import { fromEvent } from 'rxjs';
 export class CouponComponent implements OnInit {
 
   closeResult = ""
+  coupon = this.fb.group({
+    coupon_id: [''],
+    percentage: [''],
+    min_amt: ['']
+  })
 
   constructor(private dService: DashboardService, private modalService: NgbModal, private fb: FormBuilder) {
 
@@ -32,6 +37,19 @@ export class CouponComponent implements OnInit {
   ngOnInit(): void {
 
   }
+
+  addCoupon(){
+    let data = new FormData()
+    data.append("coupon",String(this.coupon.get("coupon_id")?.value))
+    data.append("percentage",String(this.coupon.get("percentage")?.value))
+    data.append("min_amount",String(this.coupon.get("min_amt")?.value))
+
+    this.dService.addCouponReq(data).subscribe((response)=>{
+      console.log(response);
+      
+    })
+  }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

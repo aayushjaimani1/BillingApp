@@ -83,4 +83,10 @@ export class DashboardService {
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
     return this.http.post<any>(`http://127.0.0.1:5000/recommend`, data, {headers})
   }
+
+  addCouponReq(data: any): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/addcoupon`, data, {headers})
+  }
 }
