@@ -7,6 +7,7 @@ import recommendProduct
 import MultipleProduct
 import item
 import checkstock
+import coupon
 
 app = Flask(__name__)
 CORS(app)
@@ -156,6 +157,35 @@ def recommend():
         rc = recommendProduct.LaptopRecommendationSystem("https://raw.githubusercontent.com/SkullCreek/BillingApp/main/server/Recommend%20Product/Projectt.csv")
         result = rc.recommend_laptops(brand,color,int(battery_life),int(max_price))
         return jsonify(result.to_dict())
+    else:
+        return jsonify('Missing or invalid Authorization header.'), 401
+    
+@app.route('/addcoupon', methods=['POST'])
+def addCoupon():
+    auth_header = request.headers.get('Authorization')
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        decoded = {}
+        try:
+            decoded = jwt.decode(token, "123", algorithms=["HS256"])
+        except Exception as e:
+            return jsonify('Invalid or expired token.'), 401
+        
+        coupon_id = request.form['coupon']
+        coupon_percentage = request.form['percentage']
+        min_amount = request.form['min_amount']
+
+        cpn = coupon.Coupon()
+        cpn.connect()
+        cpn.add(decoded)
+        if cpn.checkTable():
+            if cpn.addCoupon(coupon_id,coupon_percentage,min_amount):
+                return jsonify("Coupon Generated")
+            else:
+                return jsonify("Coupon Already Exists")
+        return jsonify("Error")
+        
+
     else:
         return jsonify('Missing or invalid Authorization header.'), 401
 
