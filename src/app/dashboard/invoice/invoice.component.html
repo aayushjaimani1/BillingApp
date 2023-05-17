@@ -170,21 +170,26 @@
 
           <!--Total Amount-->
           <div>
-            <form action="#">
+            <form action="#" [formGroup]="coupon" (submit)="applyCoupon()">
               <div class="row">
                 <div class="col-12">
                   <div class="input-style-1">
                     <label>Coupon ID</label>
-                    <input type="text" class="fs-4" placeholder="ADFGGF"/>
+                    <input type="text" class="fs-4" formControlName="coupon_id" placeholder="ADFGGF"/>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="input-style-1">
+                    <label>{{resultResponse}}</label>
                   </div>
                 </div>
               </div>
-            </form>
-            <div class="col-12">
-              <div class="button-group d-flex justify-content-end flex-wrap">
-                <button class="main-btn primary-btn btn-hover m-2">Apply</button>
+              <div class="col-12">
+                <div class="button-group d-flex justify-content-end flex-wrap">
+                  <button type="submit" class="main-btn primary-btn btn-hover m-2">Apply</button>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -215,7 +220,7 @@
                     <h6 class="text-sm text-medium">Coupon Discount</h6>
                   </td>
                   <td>
-                    <h6 class="text-sm text-bold">{{coupon_discount}}</h6>
+                    <h6 class="text-sm text-bold">- {{coupon_discount}}</h6>
                   </td>
                 </tr>
                 <tr>

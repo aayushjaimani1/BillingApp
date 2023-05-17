@@ -68,6 +68,26 @@ class Coupon:
         except Exception as e:
             return False
         
+    def apply(self, couponId):
+        try:
+            query = "SELECT * FROM "+ self.table + " WHERE coupon_id = '" + couponId + "'"
+            self.cur.execute(query)
+            rows = self.cur.fetchall()
+            print(rows)
+            items = []
+            for row in rows:
+                item = {
+                    'coupon_id': row[0],
+                    'percentage': row[1],
+                    'min_value': row[2]
+                }
+                items.append(item)
+
+            return jsonify(items)
+         
+        except Exception as e:
+            return jsonify(e.args)
+        
     def close(self):
         self.cur.close()
         self.con.close()

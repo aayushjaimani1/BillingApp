@@ -154,7 +154,7 @@ def recommend():
         color = request.form['color']
         battery_life = request.form['battery_life']
         max_price = request.form['max_price']
-        rc = recommendProduct.LaptopRecommendationSystem("https://raw.githubusercontent.com/SkullCreek/BillingApp/main/server/Recommend%20Product/Projectt.csv")
+        rc = recommendProduct.LaptopRecommendationSystem("https://raw.githubusercontent.com/SkullCreek/BillingApp/main/server/Inventory/Projectt.csv")
         result = rc.recommend_laptops(brand,color,int(battery_life),int(max_price))
         return jsonify(result.to_dict())
     else:
@@ -235,6 +235,32 @@ def delCoupon():
                 return jsonify("Coupon Deleted")
             else:
                 return jsonify("Coupon Not Present")
+        return jsonify("Error")
+        
+
+    else:
+        return jsonify('Missing or invalid Authorization header.'), 401
+    
+@app.route('/apply', methods=['POST'])
+def applyCoupon():
+    auth_header = request.headers.get('Authorization')
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        decoded = {}
+        try:
+            decoded = jwt.decode(token, "123", algorithms=["HS256"])
+        except Exception as e:
+            return jsonify('Invalid or expired token.'), 401
+
+        cpn = coupon.Coupon()
+        cpn.connect()
+        cpn.add(decoded)
+        if cpn.checkTable():
+            couponId = request.form['coupon_id']
+            result = cpn.apply(couponId)
+            cpn.close()
+            return result
+        
         return jsonify("Error")
         
 

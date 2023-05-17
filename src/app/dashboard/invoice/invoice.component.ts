@@ -21,6 +21,12 @@ export class InvoiceComponent {
     product_qty: [1]
   })
 
+  coupon = this.fb.group({
+    coupon_id: ['']
+  })
+
+  resultResponse = ""
+
   constructor(private dbService: DashboardService, private fb: FormBuilder){
 
   }
@@ -97,5 +103,31 @@ export class InvoiceComponent {
     this.sgst = Number((0.09 * this.subtotal).toFixed(2));
     this.grand_total = Number(((this.subtotal - this.coupon_discount) + this.cgst + this.sgst).toFixed(2))
     
+  }
+
+  applyCoupon(){
+    let data = new FormData()
+    data.append("coupon_id",String(this.coupon.value['coupon_id']))
+    this.dbService.applyCoupon(data).subscribe((response)=>{
+      if(response.length == 0){
+        this.resultResponse = "Please enter valid coupon id"
+        this.coupon_discount = 0
+        this.calculate()
+      }
+      else{
+        if(Number(response[0].min_value) <= this.subtotal){
+          this.resultResponse = "Coupon " + response[0].coupon_id + " Applied"
+          this.coupon_discount = Number(response[0].percentage)
+          this.coupon_discount = (this.coupon_discount / 100) * this.subtotal
+          this.calculate()
+        }
+        else{
+          this.resultResponse = "Min Buy " + response[0].min_value
+          this.coupon_discount = 0
+          this.calculate()
+        }
+        
+      }
+    })
   }
 }
