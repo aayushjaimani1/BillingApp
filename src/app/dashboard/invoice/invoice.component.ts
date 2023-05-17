@@ -3,6 +3,7 @@ import { Item } from './item';
 import { DashboardService } from '../dashboard.service';
 import { count } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice',
@@ -27,8 +28,34 @@ export class InvoiceComponent {
 
   resultResponse = ""
 
-  constructor(private dbService: DashboardService, private fb: FormBuilder){
+  customerDetails = this.fb.group({
+    fname: [''],
+    lname: [''],
+    address: [''],
+    email: [''],
+    phone: ['']
+  })
 
+  constructor(private dbService: DashboardService, private fb: FormBuilder, private router: Router){
+
+  }
+
+  payNow(){
+    let data = new FormData()
+    data.append("customer_details",JSON.stringify(this.customerDetails.value))
+    data.append("product_in_cart", JSON.stringify(this.items))
+    data.append("branch",this.dbService.branch.replace(/[^a-zA-Z0-9\s]/g, ''))
+    let summary = {
+      subtotal: this.subtotal,
+      discount: this.coupon_discount,
+      sgst: this.sgst,
+      cgst: this.cgst,
+      total: this.grand_total,
+    }
+    data.append("summary", JSON.stringify(summary))
+    this.dbService.pay(data).subscribe((response)=>{
+      window.location.href = response
+    })
   }
 
   addField(name:any, price: any, amt: any, additemform: any){

@@ -13,43 +13,41 @@
     <div class="col-lg-12 mb-5">
       <div class="card-style mb-30">
         <h6 class="mb-25">Customer Details</h6>
-        <form action="#">
+        <form action="#" [formGroup]="customerDetails">
           <div class="row">
             <div class="col-6">
               <div class="input-style-1">
                 <label>First Name</label>
-                <input type="text" class="fs-5" placeholder="Your First Name" />
+                <input type="text" class="fs-5" formControlName="fname" placeholder="Your First Name" />
               </div>
             </div>
             <!-- end col -->
             <div class="col-6">
               <div class="input-style-1">
                 <label>Last Name</label>
-                <input type="text" class="fs-5" placeholder="Your Last Name" />
+                <input type="text" class="fs-5" formControlName="lname" placeholder="Your Last Name" />
               </div>
             </div>
             <!-- end col -->
             <div class="col-6">
               <div class="input-style-1">
                 <label>Address</label>
-                <input type="text" class="fs-5" placeholder="Your Current Address" />
+                <input type="text" class="fs-5" formControlName="address" placeholder="Your Current Address" />
               </div>
             </div>
             <div class="col-6">
               <div class="input-style-1">
                 <label>Email Id</label>
-                <input type="email" class="fs-5" placeholder="Your Email Id" />
+                <input type="email" class="fs-5" formControlName="email" placeholder="Your Email Id" />
               </div>
             </div>
             <div class="col-6">
               <div class="input-style-1">
                 <label>Phone Number</label>
-                <input type="tel" class="fs-5" placeholder="Your Phone Number" />
+                <input type="tel" class="fs-5" formControlName="phone" placeholder="Your Phone Number" />
               </div>
             </div>
-            <!-- end col -->
           </div>
-          <!-- end row -->
         </form>
       </div>
     </div>
@@ -128,7 +126,7 @@
               
               <tr *ngFor="let item of items">
                 <td style="width: 200px;" class="pe-5">
-                  <p class="text-sm item" #sku contenteditable="true">{{item.id}}</p>
+                  <p class="text-sm item" #sku>{{item.id}}</p>
                 </td>
                 <td>
                   <p class="text-sm item">{{item.name}}</p>
@@ -137,7 +135,7 @@
                   <p class="text-sm item" #pri>{{item.price}}</p>
                 </td>
                 <td style="width: 200px;" class="pe-5">
-                  <p class="text-sm item" contenteditable="true">{{item.quantity}}</p>
+                  <p class="text-sm item">{{item.quantity}}</p>
                 </td>
                 <td>
                   <p class="text-sm item" #amt>{{item.amount}}</p>
@@ -253,7 +251,7 @@
             <!-- Payment button -->
             <div class="col-12">
               <div class="button-group d-flex justify-content-end flex-wrap">
-                <button class="main-btn primary-btn btn-hover m-2">Pay Now</button>
+                <button class="main-btn primary-btn btn-hover m-2" (click)="payNow()">Pay Now</button>
               </div>
             </div>
           </div>

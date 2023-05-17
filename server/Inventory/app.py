@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+import json
+from flask import Flask, request, jsonify, redirect
 from flask_cors import CORS
 import pandas as pd
 import jwt
@@ -8,6 +9,7 @@ import MultipleProduct
 import item
 import checkstock
 import coupon
+import payment
 
 app = Flask(__name__)
 CORS(app)
@@ -266,6 +268,66 @@ def applyCoupon():
 
     else:
         return jsonify('Missing or invalid Authorization header.'), 401
+    
+@app.route('/pay_now', methods=['POST'])
+def payNow():
+    auth_header = request.headers.get('Authorization')
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        decoded = {}
+        try:
+            decoded = jwt.decode(token, "123", algorithms=["HS256"])
+        except Exception as e:
+            return jsonify('Invalid or expired token.'), 401
+
+        customerInfo = json.loads(request.form['customer_details'])
+        cart = json.loads(request.form['product_in_cart'])
+        summary = json.loads(request.form['summary'])
+        branch = request.form['branch']
+        payd = payment.Payment()
+        payd.connect()
+        payd.getPaymentDetails(decoded)
+        payload = {
+            'customerInfo': customerInfo,
+            'cart': cart,
+            'summary': summary,
+            'Auth': decoded,
+            'branch': branch
+        }
+        encoded = jwt.encode(payload, "123", algorithm="HS256")
+
+        payment_link = payd.pay(customerInfo['fname'], customerInfo['email'], summary['total'], encoded)
+        return jsonify(payment_link)
+
+    else:
+        return jsonify('Missing or invalid Authorization header.'), 401
+    
+@app.route('/paymentStatus', methods=['GET'])
+def paymentStatus():
+    payload = request.args.get('payload')
+
+    payment_details = {}
+    try:
+        payment_details = jwt.decode(payload, "123", algorithms=["HS256"])
+    except Exception as e:
+        return jsonify('Invalid or expired token.'), 401
+    
+    username = payment_details['Auth']['username']
+    password = payment_details['Auth']['password']
+    customerInfo = payment_details['customerInfo']
+    cart = payment_details['cart']
+    summary = payment_details['summary']
+    branch = payment_details['branch']
+    print(username)
+    pd = payment.Payment()
+    pd.connect()
+    customer_id = pd.addCustomer(username, password, customerInfo)
+    result = pd.addInvoice(username, password, customer_id, cart, branch,summary)
+    print(result)
+    if result == "success":
+        return redirect("http://localhost:4200/dashboard/invoice")
+    else:
+        return redirect("http://localhost:4200/dashboard")
 
 if __name__ == '__main__':
     app.run()

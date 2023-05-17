@@ -46,12 +46,12 @@
                 $this->industry = strip_tags(pg_escape_string($this->db,trim($this->signupData->companyInformation->industry)));
                 $this->state = strip_tags(pg_escape_string($this->db,trim($this->signupData->companyInformation->state)));
 
-                $this->instamojo = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->instamojoUsername))));
-                $this->APIKey = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->privateAPIKey))));
-                $this->authToken = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->privateAuthToken))));
-                $this->privateSalt = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->privateSalt))));
-                $this->clientId = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->clientID))));
-                $this->clientSecret = md5(strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->ClientSecret))));
+                $this->instamojo = strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->instamojoUsername)));
+                $this->APIKey = strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->privateAPIKey)));
+                $this->authToken = strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->privateAuthToken)));
+                $this->privateSalt = strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->privateSalt)));
+                $this->clientId = strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->clientID)));
+                $this->clientSecret = strip_tags(pg_escape_string($this->db,trim($this->signupData->paymentInformation->ClientSecret)));
                 
                 $this->noOfBranch = strip_tags(pg_escape_string($this->db,trim($this->signupData->branchInformation->noBranch)));
                 $this->branches = strip_tags(pg_escape_string($this->db,json_encode($this->signupData->branchInformation->fields)));
