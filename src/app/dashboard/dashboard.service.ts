@@ -89,4 +89,16 @@ export class DashboardService {
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
     return this.http.post<any>(`http://127.0.0.1:5000/addcoupon`, data, {headers})
   }
+
+  getCoupons(): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/coupons`, "",{headers})
+  }
+
+  deleteCoupon(data: any): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/delcoupon`, data,{headers})
+  }
 }

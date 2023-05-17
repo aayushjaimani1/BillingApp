@@ -36,3 +36,38 @@ class Coupon:
             return True
         except Exception as e:
             return False
+        
+    def getCoupon(self):
+        try:
+            query = "SELECT * FROM "+ self.table
+            self.cur.execute(query)
+            rows = self.cur.fetchall()
+            items = []
+            for row in rows:
+                item = {
+                    'coupon_id': row[0],
+                    'percentage': row[1],
+                    'min_value': row[2]
+                }
+                items.append(item)
+
+            return jsonify(items)
+         
+        except Exception as e:
+            return jsonify(e.args)
+        
+    def deleteCoupon(self, couponId):
+        try:
+            query = "DELETE FROM "+ self.table + " WHERE coupon_id = '" + couponId + "'"
+            print(query)
+            self.cur.execute(query)
+            self.con.commit()
+
+            return True
+         
+        except Exception as e:
+            return False
+        
+    def close(self):
+        self.cur.close()
+        self.con.close()

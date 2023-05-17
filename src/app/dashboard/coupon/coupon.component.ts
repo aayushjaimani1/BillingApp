@@ -30,23 +30,39 @@ export class CouponComponent implements OnInit {
     min_amt: ['']
   })
 
+  coupons: any = []
+
   constructor(private dService: DashboardService, private modalService: NgbModal, private fb: FormBuilder) {
 
   }
 
   ngOnInit(): void {
-
+    this.getCoupons()
   }
 
-  addCoupon(){
+  addCoupon(modal:any){
     let data = new FormData()
     data.append("coupon",String(this.coupon.get("coupon_id")?.value))
     data.append("percentage",String(this.coupon.get("percentage")?.value))
     data.append("min_amount",String(this.coupon.get("min_amt")?.value))
 
     this.dService.addCouponReq(data).subscribe((response)=>{
-      console.log(response);
-      
+      this.getCoupons()
+      modal.close()
+    })
+  }
+
+  getCoupons(){
+    this.dService.getCoupons().subscribe((response)=>{
+      this.coupons = response
+    })
+  }
+
+  deleteCoupon(coupon_id: string){
+    let data = new FormData()
+    data.append("coupon_id", coupon_id)
+    this.dService.deleteCoupon(data).subscribe((response)=>{
+      this.getCoupons()
     })
   }
 

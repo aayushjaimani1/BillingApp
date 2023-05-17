@@ -180,9 +180,61 @@ def addCoupon():
         cpn.add(decoded)
         if cpn.checkTable():
             if cpn.addCoupon(coupon_id,coupon_percentage,min_amount):
+                cpn.close()
                 return jsonify("Coupon Generated.")
             else:
                 return jsonify("Coupon Already Exists.")
+        return jsonify("Error")
+        
+
+    else:
+        return jsonify('Missing or invalid Authorization header.'), 401
+    
+@app.route('/coupons', methods=['POST'])
+def getCoupon():
+    auth_header = request.headers.get('Authorization')
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        decoded = {}
+        try:
+            decoded = jwt.decode(token, "123", algorithms=["HS256"])
+        except Exception as e:
+            return jsonify('Invalid or expired token.'), 401
+
+        cpn = coupon.Coupon()
+        cpn.connect()
+        cpn.add(decoded)
+        if cpn.checkTable():
+            result = cpn.getCoupon()
+            cpn.close()
+            return result
+        return jsonify("Error")
+        
+
+    else:
+        return jsonify('Missing or invalid Authorization header.'), 401
+    
+@app.route('/delcoupon', methods=['POST'])
+def delCoupon():
+    auth_header = request.headers.get('Authorization')
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        decoded = {}
+        try:
+            decoded = jwt.decode(token, "123", algorithms=["HS256"])
+        except Exception as e:
+            return jsonify('Invalid or expired token.'), 401
+
+        cpn = coupon.Coupon()
+        cpn.connect()
+        cpn.add(decoded)
+        if cpn.checkTable():
+            couponId = request.form['coupon_id']
+            if cpn.deleteCoupon(couponId):
+                cpn.close()
+                return jsonify("Coupon Deleted")
+            else:
+                return jsonify("Coupon Not Present")
         return jsonify("Error")
         
 

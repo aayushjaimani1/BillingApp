@@ -19,7 +19,7 @@
         <div class="card-style mb-30">
           <div class="title d-flex flex-wrap align-items-center justify-content-between">
             <div class="left">
-              <h6 class="text-medium mb-30">Products</h6>
+              <h6 class="text-medium mb-30">Coupons</h6>
             </div>
           </div>
           <!-- End Title -->
@@ -27,9 +27,8 @@
             <table class="table top-selling-table">
               <thead>
                 <tr>
-                  <th></th>
                   <th>
-                    <h6 class="text-sm text-medium">Coupon Code</h6>
+                    <h6 class="text-sm text-medium" >Coupon Code</h6>
                   </th>
                   <th class="min-width">
                     <h6 class="text-sm text-medium">
@@ -43,50 +42,26 @@
                   </th>
                   <th>
                     <h6 class="text-sm text-medium">
-                      Categories <i class="lni lni-arrows-vertical"></i>
-                    </h6>
-                  </th>
-                  <th>
-                    <h6 class="text-sm text-medium">
-                      Actions <i class="lni lni-arrows-vertical"></i>
+                      Actions <i class="lni lni-arrows-vertical" ></i>
                     </h6>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr >
+                <tr *ngFor="let cpn of coupons">
                   <td>
-                    <div class="check-input-primary">
-                      <input class="form-check-input" type="checkbox" id="checkbox-1">
-                    </div>
+                    <p class="text-sm" #coupon_id>{{cpn.coupon_id}}</p>
                   </td>
                   <td>
-                    <div class="product">
-                      <div class="image">
-                        <img src="" alt="" />
-                      </div>
-                      <p class="text-sm" style="width:220px"></p>
-                    </div>
+                    <p class="text-sm">{{cpn.percentage}}</p>
                   </td>
                   <td>
-                    <p class="text-sm" #singleproduct></p>
-                  </td>
-                  <td>
-                    <p class="text-sm"></p>
-                  </td>
-                  <td>
-                    <p class="text-sm"></p>
-                  </td>
-                  <td>
-                    <p class="text-sm"></p>
+                    <p class="text-sm">{{cpn.min_value}}</p>
                   </td>
                   <td>
                     <div class="action">
-                      <button class="edit">
-                        <i class="lni lni-pencil"></i>
-                      </button>
                       <button class="delete">
-                        <i class="lni lni-trash-can"></i>
+                        <i class="lni lni-trash-can" (click)="deleteCoupon(coupon_id.innerHTML)"></i>
                       </button>
                     </div>
                   </td>
@@ -111,7 +86,7 @@
       </div>
       <div class="modal-body px-0">
         <div class="content">
-          <form action="" [formGroup]="coupon" (submit)="addCoupon()">
+          <form action="" [formGroup]="coupon" (submit)="addCoupon(modal)">
             <div class="row pb-5">
               <div class="mb-3 col-6">
                 <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Coupon Code</label>
