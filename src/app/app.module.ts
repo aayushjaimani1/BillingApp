@@ -22,6 +22,7 @@ import { CouponComponent } from './dashboard/coupon/coupon.component';
 import { ReportComponent } from './dashboard/report/report.component';
 import { HistoryComponent } from './dashboard/history/history.component';
 import { RedirectComponent } from './dashboard/redirect/redirect.component';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { RedirectComponent } from './dashboard/redirect/redirect.component';
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPrintModule
   ],
   providers: [],
   bootstrap: [AppComponent]

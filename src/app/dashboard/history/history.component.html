@@ -1,4 +1,4 @@
-<section class="card-components">
+<section class="card-components" class="non-printable-content">
     <div class="container-fluid ps-2r">
       <div class="title-wrapper pt-30 pb-5">
         <div class="row align-items-center">
@@ -14,7 +14,7 @@
         <div class="card-style mb-30">
           <div class="title d-flex flex-wrap align-items-center justify-content-between">
             <div class="left">
-              <h6 class="text-medium mb-30">Coupons</h6>
+              <h6 class="text-medium mb-30">Print Invoice</h6>
             </div>
           </div>
           <!-- End Title -->
@@ -23,7 +23,7 @@
               <thead>
                 <tr>
                   <th>
-                    <h6 class="text-sm text-medium" >Customer Id</h6>
+                    <h6 class="text-sm text-medium" >Customer Name</h6>
                   </th>
                   <th>
                     <h6 class="text-sm text-medium" >Purchase Number</h6>
@@ -46,22 +46,22 @@
                 </tr>
               </thead>
               <tbody>
-                <tr >
+                <tr *ngFor="let invoice of invoices">
                   <td>
-                    <p class="text-sm" #coupon_id></p>
+                    <p class="text-sm">{{invoice.customer_name}}</p>
                   </td>
                   <td>
-                    <p class="text-sm"></p>
+                    <p class="text-sm" #purchase_id>{{invoice.purchase_id}}</p>
                   </td>
                   <td>
-                    <p class="text-sm"></p>
+                    <p class="text-sm">{{invoice.date}}</p>
                   </td>
                   <td>
-                    <p class="text-sm"></p>
+                    <p class="text-sm">{{invoice.time}}</p>
                   </td>
                   <td>
                     <div class="action">
-                      <button class="delete">
+                      <button class="delete" (click)="printInvoice(purchase_id.innerHTML, printable)">
                         <i class="lni lni-printer"></i>
                       </button>
                     </div>
@@ -76,45 +76,7 @@
     </div>
     <!-- end container -->
   </section>
-  
-  <ng-template #stockform let-modal>
-    <div class="modal-content card-style2">
-      <div class="modal-header px-0 border-0">
-        <h4 class="text-bold">History</h4>
-        <button class="border-0 bg-transparent h1" style="outline: none;"(click)="modal.dismiss('Cross click')">
-          <i class="lni lni-cross-circle"></i>
-        </button>
-      </div>
-      <div class="modal-body px-0">
-        <div class="content">
-          <form action="">
-            <div class="row pb-5">
-              <div class="mb-3 col-6">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Coupon Code</label>
-                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="FGHJJKHG"
-                  formControlName="coupon_id" />
-              </div>
-              <div class="mb-3 col-6">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Coupon Percentage</label>
-                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="10%"
-                  formControlName="percentage" />
-              </div>
-              <div class="mb-3 col-6">
-                <label class="form-label fs-5 fw-semibold m-0 pb-1 text-secondary">Min Amount</label>
-                <input type="text" class="form-control border-1 border-light-sm fs-4 mb-2" placeholder="100000"
-                  formControlName="min_amt" />
-              </div>
-            </div>
-            <div class="action d-flex flex-wrap justify-content-end">
-              <button type="submit" class="main-btn primary-btn btn-hover m-1">
-                Add Coupon
-              </button>
-            </div>
-          </form>
-        </div>
-  
-      </div>
-    </div>
-  
-  </ng-template>
-  
+
+  <section id="printable-content" #printable>
+
+  </section>
