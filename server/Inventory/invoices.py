@@ -67,6 +67,41 @@ class Invoice:
             items.append(item)
         return items
 
+    def getSalesData(self,username,password):
+        self.cur.execute("SELECT gst_number FROM users WHERE username = %s AND user_password = %s",(username, password))
+        rows = self.cur.fetchone()
+        self.table = "invoice_" + str(rows[0])
+        self.cur.execute("SELECT * FROM "+ self.table + " WHERE date >= CURRENT_DATE - INTERVAL '1 month' AND date <= CURRENT_DATE")
+        rows = self.cur.fetchall()
+        sales = []
+        for row in rows:
+            sale = [row[1].isoformat(),row[5]['total']]
+            sales.append(sale)
+        return sales
+    
+    def getDailySalesData(self,username,password):
+        self.cur.execute("SELECT gst_number FROM users WHERE username = %s AND user_password = %s",(username, password))
+        rows = self.cur.fetchone()
+        self.table = "invoice_" + str(rows[0])
+        self.cur.execute("SELECT * FROM "+ self.table + " WHERE date = CURRENT_DATE")
+        rows = self.cur.fetchall()
+        sales = []
+        for row in rows:
+            sale = [row[2].strftime('%H:%M:%S'),row[5]['total']]
+            sales.append(sale)
+        return sales
+    
+    def getYearlySalesData(self,username,password):
+        self.cur.execute("SELECT gst_number FROM users WHERE username = %s AND user_password = %s",(username, password))
+        rows = self.cur.fetchone()
+        self.table = "invoice_" + str(rows[0])
+        self.cur.execute("SELECT * FROM "+ self.table + " WHERE date >= CURRENT_DATE - INTERVAL '1 year' AND date <= CURRENT_DATE")
+        rows = self.cur.fetchall()
+        sales = []
+        for row in rows:
+            sale = [row[1].strftime("%B"),row[5]['total']]
+            sales.append(sale)
+        return sales
 
     def close(self):
         self.cur.close()

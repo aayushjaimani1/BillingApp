@@ -23,6 +23,7 @@ import { ReportComponent } from './dashboard/report/report.component';
 import { HistoryComponent } from './dashboard/history/history.component';
 import { RedirectComponent } from './dashboard/redirect/redirect.component';
 import { NgxPrintModule } from 'ngx-print';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { NgxPrintModule } from 'ngx-print';
     NgbModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxPrintModule
+    NgxPrintModule,
+    GoogleChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

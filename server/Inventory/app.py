@@ -373,6 +373,63 @@ def printInvoice():
         return jsonify(html_content)
     else:
         return jsonify('Missing or invalid Authorization header.'), 401
+    
+@app.route('/report', methods=['POST'])
+def reportData():
+    auth_header = request.headers.get('Authorization')
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        decoded = {}
+        try:
+            decoded = jwt.decode(token, "123", algorithms=["HS256"])
+        except Exception as e:
+            return jsonify('Invalid or expired token.'), 401
+
+        inv = invoices.Invoice()
+        inv.connect()
+        response_data = inv.getSalesData(decoded['username'], decoded['password'])
+        inv.close()
+        return jsonify(response_data)
+    else:
+        return jsonify('Missing or invalid Authorization header.'), 401
+    
+@app.route('/dailyreport', methods=['POST'])
+def dailyReportData():
+    auth_header = request.headers.get('Authorization')
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        decoded = {}
+        try:
+            decoded = jwt.decode(token, "123", algorithms=["HS256"])
+        except Exception as e:
+            return jsonify('Invalid or expired token.'), 401
+
+        inv = invoices.Invoice()
+        inv.connect()
+        response_data = inv.getDailySalesData(decoded['username'], decoded['password'])
+        inv.close()
+        return jsonify(response_data)
+    else:
+        return jsonify('Missing or invalid Authorization header.'), 401
+    
+@app.route('/yearlyreport', methods=['POST'])
+def yearlyReportData():
+    auth_header = request.headers.get('Authorization')
+    if auth_header and auth_header.startswith('Bearer '):
+        token = auth_header.split(' ')[1]
+        decoded = {}
+        try:
+            decoded = jwt.decode(token, "123", algorithms=["HS256"])
+        except Exception as e:
+            return jsonify('Invalid or expired token.'), 401
+
+        inv = invoices.Invoice()
+        inv.connect()
+        response_data = inv.getYearlySalesData(decoded['username'], decoded['password'])
+        inv.close()
+        return jsonify(response_data)
+    else:
+        return jsonify('Missing or invalid Authorization header.'), 401
 
 if __name__ == '__main__':
     app.run()

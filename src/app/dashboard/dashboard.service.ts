@@ -125,4 +125,21 @@ export class DashboardService {
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
     return this.http.post<any>(`http://127.0.0.1:5000/print`, data,{headers})
   }
+
+  reportData(): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/report`, "",{headers})
+  }
+  reportDailyData(): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/dailyreport`, "",{headers})
+  }
+
+  reportYearlyData(): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/yearlyreport`, "",{headers})
+  }
 }
