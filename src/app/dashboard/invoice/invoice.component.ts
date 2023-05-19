@@ -101,7 +101,7 @@ export class InvoiceComponent {
     this.dbService.checkStock(data).subscribe((response)=>{
       if(response >= Number(this.addItem.get('product_qty')?.value)){
         let amt = Number(this.addItem.get('product_qty')?.value) * Number(pri.replace("$",""))
-        amts.innerHTML = "$" + amt.toFixed(2) + ""
+        amts.innerHTML = amt.toFixed(2) + ""
       }
       else{
         alert("Out Of Stock")

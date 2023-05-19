@@ -159,7 +159,7 @@ def recommend():
         battery_life = request.form['battery_life']
         max_price = request.form['max_price']
         rc = recommendProduct.LaptopRecommendationSystem("https://raw.githubusercontent.com/SkullCreek/BillingApp/main/server/Inventory/Projectt.csv")
-        result = rc.recommend_laptops(brand,color,int(battery_life),int(max_price))
+        result = rc.recommend_laptops(brand=brand,color=color,battery_life=int(battery_life),max_price=int(max_price))
         return jsonify(result.to_dict())
     else:
         return jsonify('Missing or invalid Authorization header.'), 401
