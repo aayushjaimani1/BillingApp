@@ -8,6 +8,7 @@ nav ul{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-left: 0!important;
 }
 nav .auth{
     width: 18.2rem;
@@ -45,3 +46,7 @@ ul{
         padding: 2.2rem 2rem;
     }
 }
+
+.text-primary{
+    color: #6824b7!important;
+  }

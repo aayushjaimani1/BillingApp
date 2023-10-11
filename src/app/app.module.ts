@@ -18,6 +18,12 @@ import { TopbarComponent } from './dashboard/topbar/topbar.component';
 import { AddProductComponent } from './dashboard/add-product/add-product.component';
 import { InvoiceComponent } from './dashboard/invoice/invoice.component';
 import { ConsultComponent } from './dashboard/consult/consult.component';
+import { CouponComponent } from './dashboard/coupon/coupon.component';
+import { ReportComponent } from './dashboard/report/report.component';
+import { HistoryComponent } from './dashboard/history/history.component';
+import { RedirectComponent } from './dashboard/redirect/redirect.component';
+import { NgxPrintModule } from 'ngx-print';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -33,14 +39,20 @@ import { ConsultComponent } from './dashboard/consult/consult.component';
     TopbarComponent,
     AddProductComponent,
     InvoiceComponent,
-    ConsultComponent
+    ConsultComponent,
+    CouponComponent,
+    ReportComponent,
+    HistoryComponent,
+    RedirectComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPrintModule,
+    GoogleChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

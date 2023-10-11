@@ -16,10 +16,19 @@ export class NavbarComponent implements OnInit{
       this.change([1,0])
     }
     else if(this.router.url == "/dashboard/invoice"){
-      this.change([2,0])
+      this.change([3,0])
     }
     else if(this.router.url == "/dashboard/consult"){
-      this.change([3,0])
+      this.change([4,0])
+    }
+    else if(this.router.url == "/dashboard/coupon"){
+      this.change([2,0])
+    }
+    else if(this.router.url == "/dashboard/report"){
+      this.change([5,0])
+    }
+    else if(this.router.url == "/dashboard/history"){
+      this.change([6,0])
     }
   }
 

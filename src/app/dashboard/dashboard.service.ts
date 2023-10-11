@@ -65,4 +65,81 @@ export class DashboardService {
     const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
     return this.http.post<string>(`http://127.0.0.1:5000/delete`, data, {headers});
   }
+
+  getItemForInvoice(data: any): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/item`, data, {headers})
+  }
+
+  checkStock(data:any): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/checkStock`, data, {headers})
+  }
+
+  recommendedProduct(data: any): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/recommend`, data, {headers})
+  }
+
+  addCouponReq(data: any): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/addcoupon`, data, {headers})
+  }
+
+  getCoupons(): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/coupons`, "",{headers})
+  }
+
+  deleteCoupon(data: any): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/delcoupon`, data,{headers})
+  }
+
+  applyCoupon(data: any): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/apply`, data,{headers})
+  }
+
+  pay(data: any): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/pay_now`, data,{headers})
+  }
+
+  getInvoices(): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/invoices`, "",{headers})
+  }
+
+  print(data: any): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/print`, data,{headers})
+  }
+
+  reportData(): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/report`, "",{headers})
+  }
+  reportDailyData(): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/dailyreport`, "",{headers})
+  }
+
+  reportYearlyData(): Observable<any>{
+    const jwt = sessionStorage.getItem('_a_');
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${jwt}`)
+    return this.http.post<any>(`http://127.0.0.1:5000/yearlyreport`, "",{headers})
+  }
 }
